@@ -55,7 +55,7 @@ Page({
             sizeType: ['compressed'],
             sourceType: ['album', 'camera'],
             success: function(res){
-                util.showBusy('正在识别')
+                util.showBusy('正在转换')
                 var filePath = res.tempFilePaths[0]
 
                 beforUpload(filePath)
