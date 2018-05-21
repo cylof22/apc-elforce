@@ -11,8 +11,49 @@ Page({
         styleImgURL: '',
 
         // Preview Image
-        showPreview: false,
         previewImgURL: '',
+    },
+
+    selectContent: function() {
+        var that = this
+        this._chooseImgAndUpload(
+            "",
+            function(filePath) {
+                that.setData({
+                    contentImgURL: filePath
+                })
+            },
+            function (res) {
+                console.log(res)
+                // Show the preview data
+            },
+
+            function (e) {
+                console.log(e)
+                util.showModel('选择内容失败' + e.message)
+            }
+        )
+    },
+
+    selectStyle: function() {
+        var that = this
+        this._chooseImgAndUpload(
+            "",
+            function(filePath) {
+                that.setData({
+                    styleImgURL: filePath
+                })
+            },
+            function (res) {
+                console.log(res)
+                // Show the preview data
+            },
+
+            function (e) {
+                console.log(e)
+                util.showModel('选择样式失败' + e.message)
+            }
+        )
     },
 
     doNeuralStyleTransfer: function() {

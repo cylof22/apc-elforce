@@ -1,47 +1,42 @@
 <!--index.wxml-->
 <view class="container">
     
-    <!-- 印刷体识别 -->
+    <!-- 内容 -->
     <view class="uploader">
-        <view class="uploader-text" bindtap="doWordIndentify">
-            <text>印刷体识别</text>
+        <view class="uploader-text" bindtap="selectContent">
+            <text>内容</text>
         </view>
-        <view class="uploader-container" wx:if="{{ocrImgUrl}}">
+        <view class="uploader-container" wx:if="{{contentImgURL}}">
             <image
                 class="uploader-image"
-                src="{{ocrImgUrl}}"
+                src="{{contentImgURL}}"
                 mode="aspectFit"
-                bindtap="previewImg"
+                bindtap="contentImg"
             ></image>
-            <view class="uploader-cardinfo" wx:if="{{showOcrResult}}">
-                <text wx:for="{{ocrResult}}" wx:for-item="item" wx:for-index="idx">
-                    {{idx}}：{{item.itemstring}}
-                </text>
-            </view>
         </view>
-    </view>
-    
-    <!-- 身份证识别 -->
-    <view class="uploader">
-        <view class="uploader-text" bindtap="doIdCardIdentify">
-            <text>身份证识别</text>
+         <view class="uploader-text" bindtap="selectStyle">
+            <text>样式</text>
         </view>
-        <view class="uploader-container" wx:if="{{imgUrl}}">
+        <view class="uploader-container" wx:if="{{styleImgURL}}">
             <image
                 class="uploader-image"
-                src="{{imgUrl}}"
+                src="{{styleImgURL}}"
                 mode="aspectFit"
-                bindtap="previewImg"
+                bindtap="styleImg"
             ></image>
-            <view class="uploader-cardinfo" wx:if="{{showResult}}">
-                <text>姓名：{{ idCardInfo.name }}</text>
-                <text>性别：{{ idCardInfo.sex }}</text>
-                <text>民族：{{ idCardInfo.nation }}</text>
-                <text>生日：{{ idCardInfo.birth }}</text>
-                <text>住址：{{ idCardInfo.address }}</text>
-                <text>身份证号：{{ idCardInfo.id }}</text>
-            </view>
         </view>
-    </view>
 
+        <view class="uploader-text" bindtap="doNeuralStyleTransfer">
+            <text>转换</text>
+        </view>
+
+        <view class="uploader-container" wx:if="{{previewImgURL}}">
+            <image
+                class="uploader-image"
+                src="{{previewImgURL}}"
+                mode="aspectFit"
+                bindtap="previewImg"
+            ></image>
+        </view>
+    </view>
 </view>
