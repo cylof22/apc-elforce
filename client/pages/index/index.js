@@ -17,7 +17,7 @@ Page({
     selectContent: function() {
         var that = this
         this._chooseImgAndUpload(
-            "",
+            config.service.contentURL,
             function(filePath) {
                 that.setData({
                     contentImgURL: filePath
@@ -38,7 +38,7 @@ Page({
     selectStyle: function() {
         var that = this
         this._chooseImgAndUpload(
-            "",
+            config.service.styleURL,
             function(filePath) {
                 that.setData({
                     styleImgURL: filePath
@@ -58,28 +58,18 @@ Page({
 
     doNeuralStyleTransfer: function() {
         var that = this
-        that.setData({
-            showPreview: false
-        })
 
-        // Select Picture and transfer
-        this._chooseImgAndUpload(
-            // Add more data for target and artist type
-            config.service.ciUrl + '?action=transfer',
-            function(filePath) {
-                that.setData({
-                    contentImgURL: filePath
-                })
-            },
-            function (res) {
-                console.log(res)
-                // Show the preview data
-            },
-            function (e) {
-                console.log(e)
-                util.showModel('转换失败' + e.message)
-            }
-        )
+        // How to send http request to the target url
+        transferUrL = config.service.transferURL + '?style=' + this.styleImgURL + '&' + '?content=' + this.contentImgURL
+
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(that.previewImgURL = xmlHttp.responseText)
+        }
+
+        xmlHttp.open("GET", transferURL, true); // true for asynchronous 
+        xmlHttp.send(null);
     },
 
     /**
@@ -97,7 +87,7 @@ Page({
             sizeType: ['compressed'],
             sourceType: ['album', 'camera'],
             success: function(res){
-                util.showBusy('正在转换')
+                util.showBusy('正在加载')
                 var filePath = res.tempFilePaths[0]
 
                 beforUpload(filePath)

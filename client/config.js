@@ -11,8 +11,9 @@ var config = {
     service: {
         host,
         
-        // 万象优图接口
-        ciUrl: `${host}/weapp/ci`
+        contentURL: `${host}/content`,
+        styleURL: `${host}/style`,
+        transferURL: `${host}/transfer`
     }
 };
 
