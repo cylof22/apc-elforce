@@ -12,6 +12,7 @@ Page({
 
         // Preview Image
         showPreview: false,
+        previewImgURL: '',
     },
 
     doNeuralStyleTransfer: function() {
