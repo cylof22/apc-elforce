@@ -59,7 +59,6 @@ Page({
     doNeuralStyleTransfer: function() {
         var that = this
 
-        // How to send http request to the target url
         transferUrL = config.service.transferURL + '?style=' + this.styleImgURL + '&' + '?content=' + this.contentImgURL
 
         var xmlHttp = new XMLHttpRequest();
