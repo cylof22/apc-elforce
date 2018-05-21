@@ -4,105 +4,38 @@ var util = require('../../utils/util.js')
 
 Page({
     data: {
-        // 身份证识别
-        imgUrl: '',
-        idCardInfo: {},
-        showResult: false,
+        // Content Image
+        contentImgURL: '',
 
-        // 印刷体识别
-        ocrImgUrl: '',
-        ocrResult: [],
-        showOcrResult: false
+        // Style Image
+        styleImgURL: '',
+
+        // Preview Image
+        showPreview: false,
     },
 
-    doWordIndentify: function () {
+    doNeuralStyleTransfer: function() {
         var that = this
-
         that.setData({
-            showOcrResult: false
+            showPreview: false
         })
-    
-        // 选择图片和上传图片
+
+        // Select Picture and transfer
         this._chooseImgAndUpload(
-            config.service.ciUrl + '?action=general',
-            // 上传图片之前
-            function (filePath) {
+            // Add more data for target and artist type
+            config.service.ciUrl + '?action=transfer',
+            function(filePath) {
                 that.setData({
-                    ocrImgUrl: filePath
+                    contentImgURL: filePath
                 })
             },
-            // 调用成功
             function (res) {
                 console.log(res)
-                util.showSuccess('识别成功')
-                var data = JSON.parse(res.data)
-                
-                if (data.code !== 0) {
-                    util.showModel('识别失败')
-                    return
-                }
-
-                var info = data.data
-
-                if (info.code !== 0) {
-                    util.showModel('识别失败' + info.message)
-                    return
-                }
-
-                that.setData({
-                    showOcrResult: true,
-                    ocrResult: info.data.items
-                })
+                // Show the preview data
             },
-            // 调用失败
             function (e) {
                 console.log(e)
-                util.showModel('识别失败' + e.message)
-            }
-        )
-    },
-
-    doIdCardIdentify: function () {
-        var that = this
-
-        that.setData({
-            showResult: false
-        })
-    
-        // 选择图片和上传图片
-        this._chooseImgAndUpload(
-            config.service.ciUrl + '?action=idcard',
-            // 上传图片之前
-            function (filePath) {
-                that.setData({
-                    imgUrl: filePath
-                })
-            },
-            // 调用成功
-            function (res) {
-                util.showSuccess('识别成功')
-                var data = JSON.parse(res.data)
-                
-                if (data.code !== 0) {
-                    util.showModel('识别失败')
-                    return
-                }
-
-                var info = data.data[0]
-
-                if (info.code !== 0) {
-                    util.showModel('识别失败' + info.message)
-                    return
-                }
-
-                that.setData({
-                    showResult: true,
-                    idCardInfo: info.data
-                })
-            },
-            // 调用失败
-            function (e) {
-                util.showModel('识别失败' + e.message)
+                util.showModel('转换失败' + e.message)
             }
         )
     },
