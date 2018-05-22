@@ -1,6 +1,7 @@
 //index.js
 var config = require('../../config')
 var util = require('../../utils/util.js')
+var http = require('http');
 
 Page({
     data: {
@@ -59,18 +60,26 @@ Page({
 
         transferUrL = config.service.transferURL + '?style=' + this.styleImgURL + '&' + '?content=' + this.contentImgURL
 
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() { 
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-                that.previewImgURL = xmlHttp.responseText
-            } else {
-                console.log(e)
-                util.showModel('选择样式失败' + e.message)
-            }
-        }
+        http.get(transferUrL, (res) => {
+            console.log('STATUS: ' + res.statusCode);
+            console.log('HEADERS: ' + JSON.stringify(res.headers));
+             // Buffer the body entirely for processing as a whole.
+            var bodyChunks = [];
+            res.on('data', function(chunk) {
+                // You can process streamed parts here...
+                bodyChunks.push(chunk);
+            }).on('end', function() {
+                var body = Buffer.concat(bodyChunks);
+                console.log('BODY: ' + body);
 
-        xmlHttp.open("GET", transferURL, true); // true for asynchronous 
-        xmlHttp.send(null);
+                // hwo to set the preview file
+                previewImgURL = body;
+            })
+        })
+
+        req.on('error', function(e) {
+            console.log('转换样式失败: ' + e.message);
+        });
     },
 
     /**
