@@ -63,8 +63,11 @@ Page({
 
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(that.previewImgURL = xmlHttp.responseText)
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            that.previewImgURL = xmlHttp.responseText
+        } else {
+            console.log(e)
+            util.showModel('选择样式失败' + e.message)
         }
 
         xmlHttp.open("GET", transferURL, true); // true for asynchronous 
