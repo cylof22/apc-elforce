@@ -44,4 +44,4 @@ sh/
 # ignore test sdk.config.json
 sdk.config.json
 
-./server/__pycache__
+server/__pycache__
