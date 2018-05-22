@@ -1,7 +1,6 @@
 //index.js
 var config = require('../../config')
 var util = require('../../utils/util.js')
-var http = require('http');
 
 Page({
     data: {
@@ -60,26 +59,29 @@ Page({
 
         transferUrL = config.service.transferURL + '?style=' + this.styleImgURL + '&' + '?content=' + this.contentImgURL
 
-        http.get(transferUrL, (res) => {
-            console.log('STATUS: ' + res.statusCode);
-            console.log('HEADERS: ' + JSON.stringify(res.headers));
-             // Buffer the body entirely for processing as a whole.
-            var bodyChunks = [];
-            res.on('data', function(chunk) {
-                // You can process streamed parts here...
-                bodyChunks.push(chunk);
-            }).on('end', function() {
-                var body = Buffer.concat(bodyChunks);
-                console.log('BODY: ' + body);
+        wx.request({
+            url: transferURL,
+            method: 'POST',
+            success: function (res) {
+                console.log('STATUS: ' + res.statusCode);
+                console.log('HEADERS: ' + JSON.stringify(res.headers));
+                // Buffer the body entirely for processing as a whole.
+                var bodyChunks = [];
+                res.on('data', function(chunk) {
+                    // You can process streamed parts here...
+                    bodyChunks.push(chunk);
+                }).on('end', function() {
+                    var body = Buffer.concat(bodyChunks);
+                    console.log('BODY: ' + body);
 
-                // hwo to set the preview file
-                previewImgURL = body;
-            })
+                    // hwo to set the preview file
+                    previewImgURL = body;
+                })
+            },
+            fail: function (res) {
+                console.log('转换失败' + JSON.stringify(res))
+            },
         })
-
-        req.on('error', function(e) {
-            console.log('转换样式失败: ' + e.message);
-        });
     },
 
     /**
