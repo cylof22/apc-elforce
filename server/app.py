@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify, send_file
 from base64 import b64decode
-from os.path import basename
+from os.path import basename, join
 import urllib
 from collections import namedtuple
 from PIL import Image
+from werkzeug.utils import secure_filename
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg',])
 
 import tensorflow as tf
 tf.set_random_seed(19)
@@ -15,6 +18,32 @@ app = Flask(__name__)
 
 MODEL_DIR = ''
 CHECKPOINT_DIR = ''
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+@app.route('/content', methods=['POST'])
+def uploadContent():
+    contentFile = request.files.get('file')
+    if contentFile:
+        contentname = secure_filename(contentFile.filename)
+        contentFile.save(join('./content', contentname))
+        return contentname
+    return 'Upload Content Fails'
+
+@app.route('/style', methods=['POST'])
+def uploadStyle():
+    styleFile = request.files.get('file')
+    if styleFile:
+        stylename = secure_filename(styleFile.filename)
+        styleFile.save(join('./style', stylename))
+        return stylename
+    return 'Upload Style Fails'
+
+@app.route('/facialTransfer', methods=[''])
+def facialTransfer():
+    return NotImplemented
 
 @app.route('/styleTransfer', methods=['GET']) 
 def style_transfer(): 
@@ -123,7 +152,7 @@ def build_parser():
             metavar='HOST', default='0.0.0.0', required=False)
     parser.add_argument('--port',
             dest='port', help='style server port',
-            metavar='PORT', default='9090', required=False)
+            metavar='PORT', default='5000', required=False)
     parser.add_argument('--modeldir', 
             dest='modeldir', help='style transfer directory',
             metavar='MODEL', default='./', required=False)
