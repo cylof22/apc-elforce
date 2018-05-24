@@ -4,7 +4,6 @@ from os.path import basename, join
 import urllib
 from collections import namedtuple
 from PIL import Image
-from werkzeug.utils import secure_filename
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg',])
 
@@ -27,7 +26,7 @@ def allowed_file(filename):
 def uploadContent():
     contentFile = request.files.get('file')
     if contentFile:
-        contentname = secure_filename(contentFile.filename)
+        contentname = contentFile.filename
         contentFile.save(join('./content', contentname))
         return 'http://localhost:5000/preview/contents/' + contentname
     return 'Upload Content Fails'
@@ -36,14 +35,18 @@ def uploadContent():
 def uploadStyle():
     styleFile = request.files.get('file')
     if styleFile:
-        stylename = secure_filename(styleFile.filename)
+        stylename = styleFile.filename
         styleFile.save(join('./style', stylename))
         return 'http://localhost:5000/preview/styles/' + stylename
     return 'Upload Style Fails'
 
-@app.route('/preview/<path:path>')
-def display(path):
-    return send_from_directory('./', path)
+@app.route('/preview/styles/<path:filename>')
+def styleDisplay(filename):
+    return send_from_directory('content', filename, as_attachment=True)
+
+@app.route('/preview/contents/<path:filename>')
+def display(filename):
+    return send_from_directory('content', filename, as_attachment=True)
 
 @app.route('/facialTransfer', methods=[''])
 def facialTransfer():
