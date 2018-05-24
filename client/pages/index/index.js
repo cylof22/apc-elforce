@@ -25,11 +25,13 @@ Page({
             },
             function (res) {
                 console.log(res)
+                that.contentImgURL = res.data
+                util.showModel("Upload Style", JSON.stringify(res.data))
             },
 
             function (e) {
                 console.log(e)
-                util.showModel('选择内容失败' + e.message)
+                util.showModel('选择内容失败' + e.message, '上传内容失败')
             }
         )
     },
@@ -45,11 +47,12 @@ Page({
             },
             function (res) {
                 console.log(res)
+                console.log(res.body)
             },
 
             function (e) {
                 console.log(e)
-                util.showModel('选择样式失败' + e.message)
+                util.showModel('选择样式失败' + e.message, '上传样式失败')
             }
         )
     },
@@ -63,20 +66,26 @@ Page({
             url: transferURL,
             method: 'POST',
             success: function (res) {
-                console.log('STATUS: ' + res.statusCode);
-                console.log('HEADERS: ' + JSON.stringify(res.headers));
-                // Buffer the body entirely for processing as a whole.
-                var bodyChunks = [];
-                res.on('data', function(chunk) {
-                    // You can process streamed parts here...
-                    bodyChunks.push(chunk);
-                }).on('end', function() {
-                    var body = Buffer.concat(bodyChunks);
-                    console.log('BODY: ' + body);
+                console.log('STATUS: ' + res.statusCode)
+                console.log('HEADERS: ' + JSON.stringify(res.headers))
+                previewImgURL = res.body
+            },
+            fail: function (res) {
+                console.log('转换失败' + JSON.stringify(res))
+            },
+        })
+    },
 
-                    // hwo to set the preview file
-                    previewImgURL = body;
-                })
+    doArtistStyleTransfer: function() {
+        var that = this
+        transferURL = config.service.artistURL + '?artist=cezanne2photo_256' + '&' + '?content='
+        wx.request({
+            url: transferURL,
+            method: 'POST',
+            success: function (res) {
+                console.log('STATUS: ' + res.statusCode)
+                console.log('HEADERS: ' + JSON.stringify(res.headers))
+                previewImgURL = res.body
             },
             fail: function (res) {
                 console.log('转换失败' + JSON.stringify(res))

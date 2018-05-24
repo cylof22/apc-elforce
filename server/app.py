@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, send_from_directory
 from base64 import b64decode
 from os.path import basename, join
 import urllib
@@ -29,7 +29,7 @@ def uploadContent():
     if contentFile:
         contentname = secure_filename(contentFile.filename)
         contentFile.save(join('./content', contentname))
-        return contentname
+        return 'http://localhost:5000/preview/contents/' + contentname
     return 'Upload Content Fails'
 
 @app.route('/style', methods=['POST'])
@@ -38,8 +38,12 @@ def uploadStyle():
     if styleFile:
         stylename = secure_filename(styleFile.filename)
         styleFile.save(join('./style', stylename))
-        return stylename
+        return 'http://localhost:5000/preview/styles/' + stylename
     return 'Upload Style Fails'
+
+@app.route('/preview/<path:path>')
+def display(path):
+    return send_from_directory('./', path)
 
 @app.route('/facialTransfer', methods=[''])
 def facialTransfer():
