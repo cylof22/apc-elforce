@@ -1,6 +1,5 @@
 <!--index.wxml-->
 <view class="container">
-    
     <!-- 内容 -->
     <view class="uploader">
         <view class="uploader-text" bindtap="selectContent">
@@ -11,7 +10,6 @@
                 class="uploader-image"
                 src="{{contentImgURL}}"
                 mode="aspectFit"
-                bindtap="contentImg"
             ></image>
         </view>
          <view class="uploader-text" bindtap="selectStyle">
@@ -22,11 +20,10 @@
                 class="uploader-image"
                 src="{{styleImgURL}}"
                 mode="aspectFit"
-                bindtap="styleImg"
             ></image>
         </view>
 
-        <view class="uploader-text" bindtap="doNeuralStyleTransfer">
+        <view class="uploader-text" bindtap="doArtistStyleTransfer">
             <text>转换</text>
         </view>
 
@@ -35,7 +32,6 @@
                 class="uploader-image"
                 src="{{previewImgURL}}"
                 mode="aspectFit"
-                bindtap="previewImg"
             ></image>
         </view>
     </view>

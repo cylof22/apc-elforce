@@ -13,7 +13,7 @@ var config = {
         
         contentURL: `${host}/content`,
         styleURL: `${host}/style`,
-        transferURL: `${host}/styleTransfer`,
+        customURL: `${host}/styleTransfer`,
         artistURL: `${host}/artistStyle`
     }
 };

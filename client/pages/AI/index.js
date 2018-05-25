@@ -2,6 +2,8 @@
 var config = require('../../config')
 var util = require('../../utils/util.js')
 
+var app = getApp()
+
 Page({
     data: {
         // Content Image
@@ -14,24 +16,23 @@ Page({
         previewImgURL: '',
     },
 
-    selectContent: function() {
+    selectContent: function(event) {
         var that = this
+        console.log(event)
         this._chooseImgAndUpload(
             config.service.contentURL,
             function(filePath) {
+                console.log(filePath)
                 that.setData({
                     contentImgURL: filePath
                 })
             },
             function (res) {
                 console.log(res)
-                that.contentImgURL = res.data
-                util.showModel("Upload Style", JSON.stringify(res.data))
             },
 
             function (e) {
                 console.log(e)
-                util.showModel('选择内容失败' + e.message, '上传内容失败')
             }
         )
     },
@@ -47,12 +48,10 @@ Page({
             },
             function (res) {
                 console.log(res)
-                console.log(res.body)
             },
 
             function (e) {
                 console.log(e)
-                util.showModel('选择样式失败' + e.message, '上传样式失败')
             }
         )
     },
@@ -60,15 +59,15 @@ Page({
     doNeuralStyleTransfer: function() {
         var that = this
 
-        transferUrL = config.service.transferURL + '?style=' + this.styleImgURL + '&' + '?content=' + this.contentImgURL
-
         wx.request({
-            url: transferURL,
+            url: config.service.customURL + '?style=' + this.styleImgURL + '&' + '?content=' + this.contentImgURL,
             method: 'POST',
             success: function (res) {
                 console.log('STATUS: ' + res.statusCode)
                 console.log('HEADERS: ' + JSON.stringify(res.headers))
-                previewImgURL = res.body
+                that.setData({
+                    previewImgURL: res.body
+                })
             },
             fail: function (res) {
                 console.log('转换失败' + JSON.stringify(res))
@@ -78,14 +77,15 @@ Page({
 
     doArtistStyleTransfer: function() {
         var that = this
-        transferURL = config.service.artistURL + '?artist=cezanne2photo_256' + '&' + '?content='
         wx.request({
-            url: transferURL,
+            url: config.service.artistURL + '?artist=cezanne2photo_256' + '&' + '?content=' + that.contentImgURL,
             method: 'POST',
             success: function (res) {
                 console.log('STATUS: ' + res.statusCode)
                 console.log('HEADERS: ' + JSON.stringify(res.headers))
-                previewImgURL = res.body
+                that.setData({
+                    previewImgURL: res.body
+                })
             },
             fail: function (res) {
                 console.log('转换失败' + JSON.stringify(res))
@@ -108,18 +108,33 @@ Page({
             sizeType: ['compressed'],
             sourceType: ['album', 'camera'],
             success: function(res){
-                util.showBusy('正在加载')
+                //util.showBusy('正在加载')
                 var filePath = res.tempFilePaths[0]
 
                 beforUpload(filePath)
 
                 // 上传图片
+                var tempFilePaths = res.tempFilePaths
+                console.log(tempFilePaths)
                 wx.uploadFile({
-                    url,
-                    filePath: filePath,
+                    url, 
+                    filePath,
                     name: 'file',
-                    success: success,
-                    fail: fail
+                    success: function(res){
+                    var data = res.data
+                            wx.showModal({
+                            title: '上传文件返回状态',
+                            content: '成功',
+                            success: function(res) {
+                                if (res.confirm) {
+                                    console.log('用户点击确定')
+                                }
+                            }
+                        })
+                    },
+                    fail:function(res){
+                        console.log(res)
+                    }
                 })
             },
             fail: fail
