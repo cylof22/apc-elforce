@@ -27,26 +27,27 @@ def uploadContent():
     contentFile = request.files.get('file')
     if contentFile:
         contentname = contentFile.filename
-        contentFile.save(join('./contents', contentname))
-        return 'http://localhost:5000/preview/contents/' + contentname
-    return 'Upload Content Fails'
+        #contentFile.save(join('./contents', contentname))
+        return 'http://localhost:5000/preview/styles/' + contentname
+
+    return 'Upload Content fails'
 
 @app.route('/style', methods=['POST'])
 def uploadStyle():
     styleFile = request.files.get('file')
     if styleFile:
         stylename = styleFile.filename
-        styleFile.save(join('./styles', stylename))
+        #styleFile.save(join('./styles', stylename))
         return 'http://localhost:5000/preview/styles/' + stylename
     return 'Upload Style Fails'
 
 @app.route('/preview/styles/<path:filename>')
 def styleDisplay(filename):
-    return send_from_directory('content', filename, as_attachment=True)
+    return send_from_directory('styles', filename, as_attachment=True)
 
 @app.route('/preview/contents/<path:filename>')
 def display(filename):
-    return send_from_directory('content', filename, as_attachment=True)
+    return send_from_directory('contents', filename, as_attachment=True)
 
 @app.route('/facialTransfer', methods=[''])
 def facialTransfer():
