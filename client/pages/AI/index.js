@@ -99,7 +99,7 @@ Page({
      * @param {Function} success     调用成功时执行的函数
      * @param {Function} fail        调用失败时执行的函数
      */
-    _chooseImgAndUpload (url, beforUpload, success, fail) {
+    _chooseImgAndUpload (url, beforUpload, successfunc, failfunc) {
         var that = this
         
         // 选择图片
@@ -115,29 +115,15 @@ Page({
 
                 // 上传图片
                 var tempFilePaths = res.tempFilePaths
-                console.log(tempFilePaths)
                 wx.uploadFile({
                     url, 
                     filePath,
                     name: 'file',
-                    success: function(res){
-                    var data = res.data
-                            wx.showModal({
-                            title: '上传文件返回状态',
-                            content: '成功',
-                            success: function(res) {
-                                if (res.confirm) {
-                                    console.log('用户点击确定')
-                                }
-                            }
-                        })
-                    },
-                    fail:function(res){
-                        console.log(res)
-                    }
+                    success: successfunc,
+                    fail:failfunc
                 })
             },
-            fail: fail
+            fail: failfunc
         })
     }
 
