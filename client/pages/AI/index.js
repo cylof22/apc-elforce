@@ -60,19 +60,18 @@ Page({
     },
 
     selectVangogh: function() {
-        var that = this
-        styleArtist = 'vangogh2photo_256'
-        styleImgURL = ''
+        this.styleArtist = 'vangogh2photo_256'
+        this.styleImgURL = ''
     },
 
     selectCezanne: function() {
-        styleArtist = 'cezanne2photo_256'
-        styleImgURL = ''
+        this.styleArtist = 'cezanne2photo_256'
+        this.styleImgURL = ''
     },
 
     selectMonet: function() {
-        styleArtist = 'monet2photo_256'
-        styleImgURL = ''
+        this.styleArtist = 'monet2photo_256'
+        this.styleImgURL = ''
     },
 
     doStyleTransfer: function() {

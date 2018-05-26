@@ -75,3 +75,9 @@ page {
     color: #555;
     line-height: 40rpx;
 }
+
+.flex-wrp {display: flex; text-align: center}
+.bc_green {background: green;width:50px; height: 30px;}
+.bc_red {background: red;width:50px; height: 30px;}
+.bc_blue {background: blue;width:50px; height: 30px;}
+.bc_yellow {background: yellow; width: 50px; height: 30px}

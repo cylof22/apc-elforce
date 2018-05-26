@@ -20,7 +20,7 @@
                 <view class="flex-item bc_green" bindtap="selectVangogh">梵高</view>
                 <view class="flex-item bc_red" bindtap="selectMonet">莫奈</view>
                 <view class="flex-item bc_blue" bindtap="selectCezanne">塞尚</view>
-                <view class="flex-item bc-black" bindtap="selectStyle">定制</view>
+                <view class="flex-item bc_yellow" bindtap="selectStyle">定制</view>
             </view>
           </view>
         <view class="uploader-container" wx:if="{{styleImgURL}}">
