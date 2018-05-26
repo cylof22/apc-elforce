@@ -1,46 +1,44 @@
 <!--index.wxml-->
 <view class="container">
     <!-- 内容 -->
-    <view class="uploader">
-        <view class="uploader-text" bindtap="selectContent">
-            <text>内容</text>
+    <view class="uploader-text" bindtap="selectContent">
+        <text>内容</text>
+    </view>
+    <view class="uploader-container" wx:if="{{contentImgURL}}">
+        <image
+            class="uploader-image"
+            src="{{contentImgURL}}"
+            mode="aspectFit"
+        ></image>
+    </view>
+    <view class="uploader-text">
+        <text>样式</text>
+    </view>
+    <view class="section">
+        <view class="flex-wrp">
+            <view class="flex-item bc_green" bindtap="selectVangogh">梵高</view>
+            <view class="flex-item bc_red" bindtap="selectMonet">莫奈</view>
+            <view class="flex-item bc_blue" bindtap="selectCezanne">塞尚</view>
+            <view class="flex-item bc_yellow" bindtap="selectStyle">定制</view>
         </view>
-        <view class="uploader-container" wx:if="{{contentImgURL}}">
-            <image
-                class="uploader-image"
-                src="{{contentImgURL}}"
-                mode="aspectFit"
-            ></image>
-        </view>
-        <view class="uploader-text">
-            <text>样式</text>
-        </view>
-        <view class="section">
-            <view class="flex-wrp" style="flex-direction:row;">
-                <view class="flex-item bc_green" bindtap="selectVangogh">梵高</view>
-                <view class="flex-item bc_red" bindtap="selectMonet">莫奈</view>
-                <view class="flex-item bc_blue" bindtap="selectCezanne">塞尚</view>
-                <view class="flex-item bc_yellow" bindtap="selectStyle">定制</view>
-            </view>
-          </view>
-        <view class="uploader-container" wx:if="{{styleImgURL}}">
-            <image
-                class="uploader-image"
-                src="{{styleImgURL}}"
-                mode="aspectFit"
-            ></image>
-        </view>
+    </view>
+    <view class="uploader-container" wx:if="{{styleImgURL}}">
+        <image
+            class="uploader-image"
+            src="{{styleImgURL}}"
+            mode="aspectFit"
+        ></image>
+    </view>
 
-        <view class="uploader-text" bindtap="doArtistStyleTransfer">
-            <text>转换</text>
-        </view>
-
-        <view class="uploader-container" wx:if="{{previewImgURL}}">
-            <image
-                class="uploader-image"
-                src="{{previewImgURL}}"
-                mode="aspectFit"
-            ></image>
-        </view>
+    <view class="uploader-text" bindtap="doArtistStyleTransfer">
+        <text>转换</text>
+    </view>
+    
+    <view class="uploader-container" wx:if="{{previewImgURL}}">
+        <image
+            class="uploader-image"
+            src="{{previewImgURL}}"
+            mode="aspectFit"
+        ></image>
     </view>
 </view>
