@@ -12,6 +12,9 @@ Page({
         // Style Image
         styleImgURL: '',
 
+        // Artist type
+        styleArtist: '',
+
         // Preview Image
         previewImgURL: '',
     },
@@ -56,6 +59,30 @@ Page({
         )
     },
 
+    selectVangogh: function() {
+        var that = this
+        styleArtist = 'vangogh2photo_256'
+        styleImgURL = ''
+    },
+
+    selectCezanne: function() {
+        styleArtist = 'cezanne2photo_256'
+        styleImgURL = ''
+    },
+
+    selectMonet: function() {
+        styleArtist = 'monet2photo_256'
+        styleImgURL = ''
+    },
+
+    doStyleTransfer: function() {
+        if(styleArtist && styleArtist != '') {
+            doArtistStyleTransfer()
+        } else {
+            doNeuralStyleTransfer()
+        }
+    },
+
     doNeuralStyleTransfer: function() {
         var that = this
 
@@ -64,9 +91,8 @@ Page({
             method: 'POST',
             success: function (res) {
                 console.log('STATUS: ' + res.statusCode)
-                console.log('HEADERS: ' + JSON.stringify(res.headers))
                 that.setData({
-                    previewImgURL: res.body
+                    previewImgURL: res.data
                 })
             },
             fail: function (res) {
@@ -78,13 +104,13 @@ Page({
     doArtistStyleTransfer: function() {
         var that = this
         wx.request({
-            url: config.service.artistURL + '?artist=cezanne2photo_256' + '&' + '?content=' + that.contentImgURL,
+            url: config.service.artistURL + '?artist=' + styleArtist + '&' + '?content=' + that.contentImgURL,
             method: 'POST',
             success: function (res) {
                 console.log('STATUS: ' + res.statusCode)
                 console.log('HEADERS: ' + JSON.stringify(res.headers))
                 that.setData({
-                    previewImgURL: res.body
+                    previewImgURL: res.data
                 })
             },
             fail: function (res) {
