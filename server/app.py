@@ -27,7 +27,7 @@ def uploadContent():
     contentFile = request.files.get('file')
     if contentFile:
         contentname = contentFile.filename
-        #contentFile.save(join('./contents', contentname))
+        contentFile.save(join('./contents', contentname))
         return 'http://localhost:5000/preview/styles/' + contentname
 
     return 'Upload Content fails'
@@ -37,7 +37,7 @@ def uploadStyle():
     styleFile = request.files.get('file')
     if styleFile:
         stylename = styleFile.filename
-        #styleFile.save(join('./styles', stylename))
+        styleFile.save(join('./styles', stylename))
         return 'http://localhost:5000/preview/styles/' + stylename
     return 'Upload Style Fails'
 
