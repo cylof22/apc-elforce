@@ -89,11 +89,7 @@ def style_transfer():
 
     # Todo: How to add the custom error information to the response
     if error is not None:
-        urllib.request.urlcleanup()
         return error
-
-    # Todo: Clear the temporary style and content files
-    urllib.request.urlcleanup()
 
     return "http://localhost:5000/preview/outputs/" + outputname
 
@@ -107,7 +103,7 @@ def art_style():
     contentArg = request.args.get('content')
     contentPath = b64decode(contentArg)
     contentPath = contentPath.decode('utf-8')
-    content_file = urllib.request.urlretrieve(contentPath)[0]
+    content_file = './contents/' + basename(contentPath)
 
     im = Image.open(content_file)
     width, height = im.size
@@ -142,9 +138,6 @@ def art_style():
     img = Image.open(outputPath)
     rsImg = img.resize((width,height))
     rsImg.save(outputPath)
-
-     # Clear the temporary content file
-    urllib.request.urlcleanup()
 
     return "http://localhost:5000/outputs" + output_file
 
