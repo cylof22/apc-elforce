@@ -139,7 +139,7 @@ def art_style():
     rsImg = img.resize((width,height))
     rsImg.save(outputPath)
 
-    return "http://localhost:5000/outputs" + output_file
+    return "http://localhost:5000/preview/outputs" + output_file
 
 @app.after_request
 def after_request(response):
