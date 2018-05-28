@@ -30,7 +30,7 @@
         ></image>
     </view>
 
-    <view class="uploader-text" bindtap="doArtistStyleTransfer">
+    <view class="uploader-text" bindtap="doStyleTransfer">
         <text>转换</text>
     </view>
     

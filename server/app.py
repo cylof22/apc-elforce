@@ -28,7 +28,7 @@ def uploadContent():
     if contentFile:
         contentname = contentFile.filename
         contentFile.save(join('./contents', contentname))
-        return 'http://localhost:5000/preview/styles/' + contentname
+        return 'http://localhost:5000/preview/contents/' + contentname
 
     return 'Upload Content fails'
 
@@ -46,8 +46,12 @@ def styleDisplay(filename):
     return send_from_directory('styles', filename, as_attachment=True)
 
 @app.route('/preview/contents/<path:filename>')
-def display(filename):
+def contentDisplay(filename):
     return send_from_directory('contents', filename, as_attachment=True)
+
+@app.route('/preview/outputs/<path:filename>')
+def outputDisplay(filename):
+    return send_from_directory('outputs', filename, as_attachment=True)
 
 @app.route('/facialTransfer', methods=[''])
 def facialTransfer():
@@ -59,6 +63,8 @@ def style_transfer():
     styleArg = request.args.get('style')
 
     iterations = request.args.get('iterations', type=int)
+    if(iterations is None):
+        iterations = 10
 
     contentPath = b64decode(contentArg)
     stylePath = b64decode(styleArg)
@@ -67,14 +73,12 @@ def style_transfer():
     stylePath = stylePath.decode('utf-8')
 
     # Download the style to local machine
-    styleFileName = urllib.request.urlretrieve(stylePath)[0]
-
-    # Download the content file to local machine
-    contentFileName = urllib.request.urlretrieve(contentPath)[0]
+    styleFileName = './styles/' + basename(stylePath)
+    contentFileName = './contents/' + basename(contentPath)
 
     # Construct the output file name
-    outputname = basename(contentPath) + '_' + basename(stylePath) + '.png'
-    outputPath = 'data/outputs/' + outputname
+    outputname = basename(stylePath) + '_' + basename(contentPath) + '.png'
+    outputPath = './outputs/' + outputname
 
     args = {"content": contentFileName, "styles": {styleFileName}, "output": outputPath, "iterations": iterations,
         'network': MODEL_DIR}
@@ -90,7 +94,7 @@ def style_transfer():
     # Todo: Clear the temporary style and content files
     urllib.request.urlcleanup()
 
-    return send_file(outputPath, mimetype='image/png')
+    return "http://localhost:5000/outputs/" + outputname
 
 @app.route('/artistStyle', methods=['GET'])
 def art_style():
@@ -141,11 +145,7 @@ def art_style():
      # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    imgMIME = 'image/' + '-'.join(basename(outputPath).split('.')[1:])
-
-    print(imgMIME)
-
-    return send_file(outputPath,  mimetype=imgMIME)
+    return "http://localhost:5000/outputs" + output_file
 
 @app.after_request
 def after_request(response):
@@ -176,4 +176,5 @@ if __name__ == '__main__':
     MODEL_DIR = options.modeldir
     CHECKPOINT_DIR = options.checkpointdir
 
+    ssl = ('./certification/server.crt', './certification/server.key')
     app.run(host=options.host,port=int(options.port))

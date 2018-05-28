@@ -21,7 +21,6 @@ Page({
 
     selectContent: function(event) {
         var that = this
-        console.log(event)
         this._chooseImgAndUpload(
             config.service.contentURL,
             function(filePath) {
@@ -32,6 +31,9 @@ Page({
             },
             function (res) {
                 console.log(res)
+                that.setData({
+                  contentImgURL: res.data
+                })
             },
 
             function (e) {
@@ -51,6 +53,9 @@ Page({
             },
             function (res) {
                 console.log(res)
+                that.setData({
+                  styleImgURL: res.data
+                })
             },
 
             function (e) {
@@ -60,36 +65,67 @@ Page({
     },
 
     selectVangogh: function() {
-        this.styleArtist = 'vangogh2photo_256'
-        this.styleImgURL = ''
+        this.data.styleArtist = 'vangogh2photo_256'
+        this.data.styleImgURL = ''
     },
 
     selectCezanne: function() {
-        this.styleArtist = 'cezanne2photo_256'
-        this.styleImgURL = ''
+        this.data.styleArtist = 'cezanne2photo_256'
+        this.data.styleImgURL = ''
     },
 
     selectMonet: function() {
-        this.styleArtist = 'monet2photo_256'
-        this.styleImgURL = ''
+        this.data.styleArtist = 'monet2photo_256'
+        this.data.styleImgURL = ''
     },
 
     doStyleTransfer: function() {
-        if(styleArtist && styleArtist != '') {
-            doArtistStyleTransfer()
+        var that = this
+        if(this.data.styleArtist && this.data.styleArtist != '') {
+          this.doArtistStyleTransfer()
         } else {
-            doNeuralStyleTransfer()
+          this.doNeuralStyleTransfer()  
         }
+    },
+
+    base64_encode: function(str) { // 编码，配合encodeURIComponent使用
+        var c1, c2, c3;
+        var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+        var i = 0, len = str.length, strin = '';
+        while (i < len) {
+            c1 = str.charCodeAt(i++) & 0xff;
+            if (i == len) {
+                strin += base64EncodeChars.charAt(c1 >> 2);
+                strin += base64EncodeChars.charAt((c1 & 0x3) << 4);
+                strin += "==";
+                break;
+            }
+            c2 = str.charCodeAt(i++);
+            if (i == len) {
+                strin += base64EncodeChars.charAt(c1 >> 2);
+                strin += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+                strin += base64EncodeChars.charAt((c2 & 0xF) << 2);
+                strin += "=";
+                break;
+            }
+            c3 = str.charCodeAt(i++);
+            strin += base64EncodeChars.charAt(c1 >> 2);
+            strin += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+            strin += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+            strin += base64EncodeChars.charAt(c3 & 0x3F)
+        }
+        return strin
     },
 
     doNeuralStyleTransfer: function() {
         var that = this
-
+        var styleInfo = that.base64_encode(that.data.styleImgURL)
+        var contentInfo = that.base64_encode(that.data.contentImgURL)
         wx.request({
-            url: config.service.customURL + '?style=' + this.styleImgURL + '&' + '?content=' + this.contentImgURL,
-            method: 'POST',
+            url: config.service.customURL + '?style=' + styleInfo + '&' + 'content=' + contentInfo,
+            method: 'GET',
             success: function (res) {
-                console.log('STATUS: ' + res.statusCode)
+                console.log(res)
                 that.setData({
                     previewImgURL: res.data
                 })
@@ -102,9 +138,10 @@ Page({
 
     doArtistStyleTransfer: function() {
         var that = this
+        var contentInfo = that.base64_encode(that.data.contentImgURL)
         wx.request({
-            url: config.service.artistURL + '?artist=' + styleArtist + '&' + '?content=' + that.contentImgURL,
-            method: 'POST',
+            url: config.service.artistURL + '?artist=' + that.data.styleArtist + '&' + 'content=' + contentInfo,
+            method: 'GET',
             success: function (res) {
                 console.log('STATUS: ' + res.statusCode)
                 console.log('HEADERS: ' + JSON.stringify(res.headers))
