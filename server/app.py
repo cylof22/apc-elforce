@@ -64,7 +64,7 @@ def style_transfer():
 
     iterations = request.args.get('iterations', type=int)
     if(iterations is None):
-        iterations = 10
+        iterations = 100
 
     contentPath = b64decode(contentArg)
     stylePath = b64decode(styleArg)
