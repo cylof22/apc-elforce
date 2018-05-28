@@ -94,7 +94,7 @@ def style_transfer():
     # Todo: Clear the temporary style and content files
     urllib.request.urlcleanup()
 
-    return "http://localhost:5000/outputs/" + outputname
+    return "http://localhost:5000/preview/outputs/" + outputname
 
 @app.route('/artistStyle', methods=['GET'])
 def art_style():
