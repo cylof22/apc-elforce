@@ -19,8 +19,41 @@
             <view class="flex-item bc_green" bindtap="selectVangogh">梵高</view>
             <view class="flex-item bc_red" bindtap="selectMonet">莫奈</view>
             <view class="flex-item bc_blue" bindtap="selectCezanne">塞尚</view>
+            <view class="flex-item bc_green" bindtap="selectFixedStyle">预设</view>
             <view class="flex-item bc_yellow" bindtap="selectStyle">定制</view>
         </view>
+    </view>
+    <view class="uploader-container" wx:if="{{fixedStyle}}">
+        <image
+            class="uploader-image"
+            src="../../images/fixed-styles/la_muse.jpg"
+            mode="aspectFit"
+        ></image>
+        <image
+            class="uploader-image"
+            src="../../images/fixed-styles/rain_princess.jpg"
+            mode="aspectFit"
+        ></image>
+        <image
+            class="uploader-image"
+            src="../../images/fixed-styles/the_scream.jpg"
+            mode="aspectFit"
+        ></image>
+        <image
+            class="uploader-image"
+            src="../../images/fixed-styles/the_shipwreck_of_the_minotaur.jpg"
+            mode="aspectFit"
+        ></image>
+        <image
+            class="uploader-image"
+            src="../../images/fixed-styles/udnie.jpg"
+            mode="aspectFit"
+        ></image>
+        <image
+            class="uploader-image"
+            src="../../images/fixed-styles/wave.jpg"
+            mode="aspectFit"
+        ></image>
     </view>
     <view class="uploader-container" wx:if="{{styleImgURL}}">
         <image

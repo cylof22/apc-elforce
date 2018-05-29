@@ -12,6 +12,9 @@ Page({
         // Style Image
         styleImgURL: '',
 
+        // fixed style 
+        fixedStyle: false,
+
         // Artist type
         styleArtist: '',
 
@@ -48,7 +51,9 @@ Page({
             config.service.styleURL,
             function(filePath) {
                 that.setData({
-                    styleImgURL: filePath
+                    styleArtist: "",
+                    styleImgURL: filePath,
+                    fixedStyle: false
                 })
             },
             function (res) {
@@ -65,18 +70,29 @@ Page({
     },
 
     selectVangogh: function() {
-        this.data.styleArtist = 'vangogh2photo_256'
-        this.data.styleImgURL = ''
+        this.setData({
+            styleArtist: 'vangogh2photo_256',
+            styleImgURL: '',
+            fixedStyle: false,
+        })
+        
     },
 
     selectCezanne: function() {
-        this.data.styleArtist = 'cezanne2photo_256'
-        this.data.styleImgURL = ''
+        this.setData({
+            styleArtist: 'cezanne2photo_256',
+            styleImgURL: '',
+            fixedStyle: false,
+        })
     },
 
     selectMonet: function() {
-        this.data.styleArtist = 'monet2photo_256'
-        this.data.styleImgURL = ''
+        this.setData({
+            styleArtist: 'monet2photo_256',
+            styleImgURL: '',
+            fixedStyle: false,
+        })
+        
     },
 
     doStyleTransfer: function() {
@@ -86,6 +102,14 @@ Page({
         } else {
           this.doNeuralStyleTransfer()  
         }
+    },
+
+    selectFixedStyle: function() {
+        this.setData({
+            fixedStyle: true,
+            styleArtist: "",
+            styleImgURL: "",
+        })
     },
 
     doNeuralStyleTransfer: function() {
