@@ -23,36 +23,49 @@
             <view class="flex-item bc_yellow" bindtap="selectStyle">定制</view>
         </view>
     </view>
+    <view class="uploader-container" wx:if="{{styleArtist}}">
+        <image
+            class="uploader-image"
+            src="../../images/fixed-styles/{{masterPiece}}"
+            mode="aspectFit"
+        ></image>
+    </view>
     <view class="uploader-container" wx:if="{{fixedStyle}}">
         <image
             class="uploader-image"
             src="../../images/fixed-styles/la_muse.jpg"
             mode="aspectFit"
+            bindtap="selectLamuse"
         ></image>
         <image
             class="uploader-image"
             src="../../images/fixed-styles/rain_princess.jpg"
             mode="aspectFit"
+            bindtap="selectRainPrincess"
         ></image>
         <image
             class="uploader-image"
             src="../../images/fixed-styles/the_scream.jpg"
             mode="aspectFit"
+            bindtap="selectScreem"
         ></image>
         <image
             class="uploader-image"
             src="../../images/fixed-styles/the_shipwreck_of_the_minotaur.jpg"
             mode="aspectFit"
+            bindtap="selectShipwreck"
         ></image>
         <image
             class="uploader-image"
             src="../../images/fixed-styles/udnie.jpg"
             mode="aspectFit"
+            bindtap="selectUdnie"
         ></image>
         <image
             class="uploader-image"
             src="../../images/fixed-styles/wave.jpg"
             mode="aspectFit"
+            bindtap="selectWave"
         ></image>
     </view>
     <view class="uploader-container" wx:if="{{styleImgURL}}">

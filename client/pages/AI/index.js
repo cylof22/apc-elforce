@@ -14,9 +14,11 @@ Page({
 
         // fixed style 
         fixedStyle: false,
+        fixedStyleType: '',
 
         // Artist type
         styleArtist: '',
+        masterPiece: '',
 
         // Preview Image
         previewImgURL: '',
@@ -51,7 +53,9 @@ Page({
             config.service.styleURL,
             function(filePath) {
                 that.setData({
-                    styleArtist: "",
+                    artistTransfer: false,
+                    styleArtist: '',
+                    masterPiece: '',
                     styleImgURL: filePath,
                     fixedStyle: false
                 })
@@ -72,6 +76,7 @@ Page({
     selectVangogh: function() {
         this.setData({
             styleArtist: 'vangogh2photo_256',
+            masterPiece: 'still-life-vase-with-fifteen-sunflowers-1888-1.jpg',
             styleImgURL: '',
             fixedStyle: false,
         })
@@ -81,6 +86,7 @@ Page({
     selectCezanne: function() {
         this.setData({
             styleArtist: 'cezanne2photo_256',
+            masterPiece: 'forest.jpg',
             styleImgURL: '',
             fixedStyle: false,
         })
@@ -89,29 +95,74 @@ Page({
     selectMonet: function() {
         this.setData({
             styleArtist: 'monet2photo_256',
+            masterPiece: 'autumn-on-the-seine-at-argenteuil.jpg',
             styleImgURL: '',
             fixedStyle: false,
         })
         
     },
 
+    selectLamuse: function() {
+        this.data.fixedStyleType = "la_muse.ckpt"
+    },
+
+    selectRainPrincess: function() {
+        this.data.fixedStyleType = "rain_princess.ckpt"
+    },
+
+    selectScreem: function() {
+        this.data.fixedStyleType = "scream.ckpt"
+    },
+
+    selectShipwreck: function() {
+        this.data.fixedStyleType = "wreck.ckpt"
+    },
+
+    selectUdnie: function() {
+        this.data.fixedStyleType = "udnie.ckpt"
+    },
+
+    selectWave: function() {
+        this.data.fixedStyleType = "wave.ckpt"
+    },
+
+    selectFixedStyle: function() {
+        this.setData({
+            fixedStyle: true,
+            styleArtist: '',
+            masterPiece: '',
+            styleImgURL: '',
+        })
+    },
+
     doStyleTransfer: function() {
         var that = this
-        if(this.data.styleArtist && this.data.styleArtist != '') {
+        if(this.data.fixedStyle) {
+            doFixedStyleTransfer()
+        } else if(this.data.styleArtist && this.data.styleArtist != '') {
           this.doArtistStyleTransfer()
         } else {
           this.doNeuralStyleTransfer()  
         }
     },
 
-    selectFixedStyle: function() {
-        this.setData({
-            fixedStyle: true,
-            styleArtist: "",
-            styleImgURL: "",
+    doFixedStyleTransfer: function() {
+        var that = this
+        var contentInfo = util.base64_encode(that.data.contentImgURL)
+        wx.request({
+            url: config.service.fixedURL + '?style=' + fixedStyleType + '&' + 'content=' + contentInfo,
+            method: 'GET',
+            success: function (res) {
+                console.log(res)
+                that.setData({
+                    previewImgURL: res.data
+                })
+            },
+            fail: function (res) {
+                console.log('转换失败' + JSON.stringify(res))
+            },
         })
     },
-
     doNeuralStyleTransfer: function() {
         var that = this
         var styleInfo = util.base64_encode(that.data.styleImgURL)

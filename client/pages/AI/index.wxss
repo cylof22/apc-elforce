@@ -6,6 +6,11 @@ page {
     justify-content: flex-start;
 }
 
+.uploader-image {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 .uploader-text {
     padding-left: 30px;
 }

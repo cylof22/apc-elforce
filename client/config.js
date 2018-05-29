@@ -14,7 +14,8 @@ var config = {
         contentURL: `${host}/content`,
         styleURL: `${host}/style`,
         customURL: `${host}/styleTransfer`,
-        artistURL: `${host}/artistStyle`
+        artistURL: `${host}/artistStyle`,
+        fixedURL: `${host}/fixedStyle`
     }
 };
 
