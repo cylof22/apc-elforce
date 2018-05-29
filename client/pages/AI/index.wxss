@@ -59,6 +59,5 @@ page {
 }
 
 .btn-share {
-  padding: 5rpx 5rpx 5rpx 5rpx;
-  background-color: red;
+  border-radius: 50rpx!important;
 }
