@@ -1,0 +1,13 @@
+<scroll-view scroll-y="true">
+  <view wx:for="{{products}}" wx:key="idx" class="item-container" bindtap="showDetail" id="{{idx}}">
+    <image mode="aspectFit" src="{{item.cover}}" class="cover"></image>
+    <view class="desc">
+      <view class="left">
+        <view style="font-size:32rpx;margin:10rpx 0;">{{item.title}}</view>
+      </view>
+      <view class="right">
+        <text style="font-size:24rpx;margin-top:10rpx;color:darkgray">{{item.nickName}}</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>
