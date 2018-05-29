@@ -40,5 +40,6 @@
             src="{{previewImgURL}}"
             mode="aspectFit"
         ></image>
+        <button class="btn-share" bindtap="saveAndShare">保存图片，分享到朋友圈</button>
     </view>
 </view>

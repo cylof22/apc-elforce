@@ -57,3 +57,8 @@ page {
     width: 50px; 
     height: 30px
 }
+
+.btn-share {
+  padding: 5rpx 5rpx 5rpx 5rpx;
+  background-color: red;
+}
