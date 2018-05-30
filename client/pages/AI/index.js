@@ -22,6 +22,8 @@ Page({
 
         // Preview Image
         previewImgURL: '',
+
+        highLightIndex: -1,
     },
 
     selectContent: function(event) {
@@ -57,7 +59,8 @@ Page({
                     styleArtist: '',
                     masterPiece: '',
                     styleImgURL: filePath,
-                    fixedStyle: false
+                    fixedStyle: false,
+                    highLightIndex: 4,
                 })
             },
             function (res) {
@@ -79,6 +82,7 @@ Page({
             masterPiece: 'still-life-vase-with-fifteen-sunflowers-1888-1.jpg',
             styleImgURL: '',
             fixedStyle: false,
+            highLightIndex: 0,
         })
         
     },
@@ -89,6 +93,7 @@ Page({
             masterPiece: 'forest.jpg',
             styleImgURL: '',
             fixedStyle: false,
+            highLightIndex: 2,
         })
     },
 
@@ -98,6 +103,7 @@ Page({
             masterPiece: 'autumn-on-the-seine-at-argenteuil.jpg',
             styleImgURL: '',
             fixedStyle: false,
+            highLightIndex: 1,
         })
         
     },
@@ -132,6 +138,7 @@ Page({
             styleArtist: '',
             masterPiece: '',
             styleImgURL: '',
+            highLightIndex: 3,
         })
     },
 
