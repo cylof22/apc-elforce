@@ -1,13 +1,6 @@
-<scroll-view scroll-y="true">
-  <view wx:for="{{products}}" wx:key="idx" class="item-container" bindtap="showDetail" id="{{idx}}">
-    <image mode="aspectFit" src="{{item.cover}}" class="cover"></image>
-    <view class="desc">
-      <view class="left">
-        <view style="font-size:32rpx;margin:10rpx 0;">{{item.title}}</view>
-      </view>
-      <view class="right">
-        <text style="font-size:24rpx;margin-top:10rpx;color:darkgray">{{item.nickName}}</text>
-      </view>
-    </view>
-  </view>
-</scroll-view>
+<view class='product-row' wx:for='{{productList}}' wx:key='id' wx:if='{{index%2 === 0}}'>
+  <navigator class='product-card' wx:for='{{[productList[index], productList[index+1]]}}' wx:key='id' wx:for-index='pindex' wx:for-item='pitem'>
+    <image class='product-image' src='{{pitem.image}}' data-src="{{pitem.image}}" mode='aspectFix' bindtap='previewProduct'></image>
+    <view class='product-name'>{{pitem.name}}</view>
+  </navigator>
+</view>
