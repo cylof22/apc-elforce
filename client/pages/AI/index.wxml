@@ -30,41 +30,45 @@
             mode="aspectFit"
         ></image>
     </view>
-    <view class="uploader-container" wx:if="{{fixedStyle}}">
+    <view class="style-row" wx:if="{{fixedStyle}}">
         <image
-            class="uploader-image"
+            class="style-image"
             src="../../images/fixed-styles/la_muse.jpg"
-            mode="aspectFit"
+            mode="widthFix"
             bindtap="selectLamuse"
         ></image>
         <image
-            class="uploader-image"
+            class="style-image"
             src="../../images/fixed-styles/rain_princess.jpg"
-            mode="aspectFit"
+            mode="widthFix"
             bindtap="selectRainPrincess"
         ></image>
+    </view>
+    <view class="style-row" wx:if="{{fixedStyle}}">
         <image
-            class="uploader-image"
+            class="style-image"
             src="../../images/fixed-styles/the_scream.jpg"
-            mode="aspectFit"
+            mode="widthFix"
             bindtap="selectScreem"
         ></image>
         <image
-            class="uploader-image"
+            class="style-image"
             src="../../images/fixed-styles/the_shipwreck_of_the_minotaur.jpg"
-            mode="aspectFit"
+            mode="widthFix"
             bindtap="selectShipwreck"
         ></image>
+    </view>
+    <view class="style-row" wx:if="{{fixedStyle}}">
         <image
-            class="uploader-image"
+            class="style-image"
             src="../../images/fixed-styles/udnie.jpg"
-            mode="aspectFit"
+            mode="widthFix"
             bindtap="selectUdnie"
         ></image>
         <image
-            class="uploader-image"
+            class="style-image"
             src="../../images/fixed-styles/wave.jpg"
-            mode="aspectFit"
+            mode="widthFix"
             bindtap="selectWave"
         ></image>
     </view>
