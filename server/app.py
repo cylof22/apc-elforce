@@ -11,7 +11,8 @@ import tensorflow as tf
 tf.set_random_seed(19)
 
 from neural_style import neuralstyle
-from model import cyclegan
+from artist_style import cyclegan
+from fast_style import faststyle
 from argparse import ArgumentParser
 
 app = Flask(__name__)
@@ -29,6 +30,7 @@ def uploadContent():
     if contentFile:
         contentname = contentFile.filename
         contentFile.save(join('./contents', contentname))
+        
         return 'http://localhost:5000/preview/contents/' + contentname
 
     return 'Upload Content fails'
@@ -73,7 +75,6 @@ def style_transfer():
     contentPath = contentPath.decode('utf-8')
     stylePath = stylePath.decode('utf-8')
 
-    # Download the style to local machine
     styleFileName = './styles/' + basename(stylePath)
     contentFileName = './contents/' + basename(contentPath)
 
@@ -92,6 +93,28 @@ def style_transfer():
         return error
 
     return "http://localhost:5000/preview/outputs/" + outputname
+
+@app.route('/fixedStyle', methods=['GET'])
+def fixed_style():
+    # parse the model type
+    style = request.args.get("style")
+    modelPath = './models/' + style + ".ckpt"
+
+    # Parse the content arguments
+    contentArg = request.args.get('content')
+    contentPath = b64decode(contentArg)
+    contentPath = contentPath.decode('utf-8')
+
+    outputfilename = style + '_' + basename(contentPath)
+    outputPath = './outputs/' + outputfilename
+
+    contentPath = './contents/' + basename(contentPath)
+
+    args = { "in-path": contentPath, "out-path": outputPath, "checkpoint_dir": modelPath}    
+    _ = faststyle(args)
+
+    return 'http://localhost:5000/preview/outputs/' + outputfilename
+
 
 @app.route('/artistStyle', methods=['GET'])
 def art_style():
