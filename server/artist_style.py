@@ -7,7 +7,7 @@ import numpy as np
 from collections import namedtuple
 
 from artist_transfer.module import *
-from artist_style.utils import *
+from artist_transfer.utils import *
 
 class cyclegan(object):
     def __init__(self, sess, args):

@@ -1,7 +1,8 @@
 from __future__ import print_function
 
-from fast_transfer import transform
-import numpy as np, vgg, pdb, os
+from fast_transfer import transform, vgg
+import numpy as np, pdb, os
+
 import scipy.misc
 import tensorflow as tf
 from argparse import ArgumentParser
