@@ -45,3 +45,4 @@ sh/
 sdk.config.json
 
 server/__pycache__
+server/fast_transfer/__pycache__
