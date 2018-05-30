@@ -65,3 +65,14 @@ page {
   border-radius: 13rpx 13rpx 0 0;
   padding: 5px 5px 5px 5px;
 }
+
+.preview-container {
+    width: 100%;
+    padding: 20rpx 20rpx 20rpx 20rpx;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+}

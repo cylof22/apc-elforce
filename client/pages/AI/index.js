@@ -156,6 +156,10 @@ Page({
     doFixedStyleTransfer: function() {
         var that = this
         var contentInfo = util.base64_encode(that.data.contentImgURL)
+        wx.showLoading({
+            title: '正在生成图片...',
+            mask: true,
+        });
         wx.request({
             url: config.service.fixedURL + '?style=' + that.data.fixedStyleType + '&' + 'content=' + contentInfo,
             method: 'GET',
@@ -164,9 +168,11 @@ Page({
                 that.setData({
                     previewImgURL: res.data
                 })
+                wx.hideLoading()
             },
             fail: function (res) {
                 console.log('转换失败' + JSON.stringify(res))
+                wx.hideLoading()
             },
         })
     },
@@ -174,6 +180,10 @@ Page({
         var that = this
         var styleInfo = util.base64_encode(that.data.styleImgURL)
         var contentInfo = util.base64_encode(that.data.contentImgURL)
+        wx.showLoading({
+            title: '正在生成图片...',
+            mask: true,
+        });
         wx.request({
             url: config.service.customURL + '?style=' + styleInfo + '&' + 'content=' + contentInfo,
             method: 'GET',
@@ -182,9 +192,11 @@ Page({
                 that.setData({
                     previewImgURL: res.data
                 })
+                wx.hideLoading()
             },
             fail: function (res) {
                 console.log('转换失败' + JSON.stringify(res))
+                wx.hideLoading()
             },
         })
     },
@@ -192,6 +204,11 @@ Page({
     doArtistStyleTransfer: function() {
         var that = this
         var contentInfo = util.base64_encode(that.data.contentImgURL)
+        wx.showLoading({
+            title: '正在生成图片...',
+            mask: true,
+        });
+
         wx.request({
             url: config.service.artistURL + '?artist=' + that.data.styleArtist + '&' + 'content=' + contentInfo,
             method: 'GET',
@@ -201,45 +218,88 @@ Page({
                 that.setData({
                     previewImgURL: res.data
                 })
+                wx.hideLoading();
             },
             fail: function (res) {
                 console.log('转换失败' + JSON.stringify(res))
+                wx.hideLoading()
             },
         })
     },
 
     saveAndShare() {
         // Todo: How to add qrcode to the image, right corner?
-        wx.downloadFile({
-            url: this.data.previewImgURL,
-            success:function (res) {
-                console.log(res);
-                //图片保存到本地
-                wx.saveImageToPhotosAlbum({
-                    filePath: res.tempFilePath,
-                    success:function (data) {
-                        onsole.log(data);
-                    },
-                    fail:function (err) {
-                        console.log(err);
-                        if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
-                            console.log("用户一开始拒绝了，我们想再次发起授权")
-                            console.log('打开设置窗口')
-                            wx.openSetting({
-                                success(settingdata) {
-                                    console.log(settingdata)
-                                    if (settingdata.authSetting['scope.writePhotosAlbum']) {
-                                        console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
-                                    } else {
-                                        console.log('获取权限失败，给出不给权限就无法正常使用的提示')
-                                    }
+        wx.getImageInfo({
+            src: this.data.previewImgURL,
+            success: function(data) {
+                wx.showLoading({
+                    title: '正在保存图片...',
+                    mask: true,
+                });
+
+                const canvasCtx = wx.createCanvasContext('shareCanvas');
+                //绘制背景
+                canvasCtx.setFillStyle('white');
+                canvasCtx.fillRect(0, 0, data.width, data.height);
+
+                // draw the preview
+                canvasCtx.drawImage(data.path, 0, 0, data.width, data.height);
+
+                // draw the qr image
+                canvasCtx.drawImage('../images/nav/shared.pnt', data.width * 9 / 10, data.height * 9 / 10, data.width, data.height)
+
+                // fill the canvas
+                canvasCtx.draw();
+
+                setTimeout(function () {
+                    wx.canvasToTempFilePath({
+                      x: 0,
+                      y: 0,
+                      width: data.width,
+                      height: data.height,
+                      destWidth: data.width,
+                      destHeight: data.height,
+                      canvasId: 'shareCanvas',
+                      success: function (res) {
+                        //图片保存到本地
+                        wx.saveImageToPhotosAlbum({
+                            filePath: res.tempFilePath,
+                            success:function (data) {
+                                onsole.log(data);
+                            },
+                            fail:function (err) {
+                                console.log(err);
+                                if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+                                    console.log("用户一开始拒绝了，我们想再次发起授权")
+                                    console.log('打开设置窗口')
+                                    wx.openSetting({
+                                        success(settingdata) {
+                                            console.log(settingdata)
+                                            if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                                                console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
+                                            } else {
+                                                console.log('获取权限失败，给出不给权限就无法正常使用的提示')
+                                            }
+                                        }
+                                    })  
                                 }
-                            })  
-                        }
-                    }
-                })
+                            }
+                        })
+
+                        wx.hideLoading();
+                      },
+                      fail: function (res) {
+                        console.log(res)
+                        wx.hideLoading();
+                      }
+                    })
+                  }, 2000);
+            },
+            fail: function(data) {
+                // Todo: Please retry again
+                wx.hideLoading()
             }
-        })     
+        })   
     },
     /**
      * 统一封装选择图片和上传图片的 API

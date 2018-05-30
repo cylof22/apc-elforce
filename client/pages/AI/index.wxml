@@ -103,7 +103,7 @@
         <text>转换</text>
     </view>
     
-    <view class="uploader-container" wx:if="{{previewImgURL}}">
+    <view class="preview-container" wx:if="{{previewImgURL}}">
         <image
             class="uploader-image"
             src="{{previewImgURL}}"
