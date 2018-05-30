@@ -46,6 +46,8 @@ sdk.config.json
 
 server/__pycache__
 server/fast_transfer/__pycache__
+server/artist_transfer/__pycache__
+server/neural_transfer/__pycache__
 server/models
 server/certifcation
 server/certification/server.crt
