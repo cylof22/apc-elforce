@@ -266,6 +266,7 @@ Page({
                             filePath: res.tempFilePath,
                             success:function (data) {
                                 onsole.log(data);
+                                wx.hideLoading()
                             },
                             fail:function (err) {
                                 console.log(err);
