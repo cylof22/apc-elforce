@@ -1,10 +1,11 @@
-
 from neural_style import neuralstyle
 from neural_style_preview import style_preview
+from fast_style import faststyle
+import os
 
 def art_style_demo():
     contentFileName = "./demo.jpg"
-    styleFileName = "BtoA_雪色流光-洛阳市西城区西大街.jpg"
+    styleFileName = "BtoA_demo.jpg"
     outputPath = "./testok.jpg"
     iterations = 10
     model = "./"
@@ -20,10 +21,18 @@ def art_style_demo():
 
 def art_style_preview_demo():
     contentFileName = "./demo.jpg"
-    styleFileName = "BtoA_雪色流光-洛阳市西城区西大街.jpg"
+    styleFileName = "BtoA_demo.jpg"
     outputPath = "./testok.jpg"
 
     style_preview(contentFileName, styleFileName, outputPath)
 
+def fast_style_demo():
+    contentFileName = './demo.jpg'
+    outputPath = "./test_fast.jpg"
+    modelPath = "./models/rain_princess.ckpt"
+
+    args = { "in-path": contentFileName, "out-path": outputPath, "checkpoint_dir": modelPath}    
+    fastOp = faststyle(args)
+
 if __name__ == '__main__':
-    art_style_preview_demo()
+    fast_style_demo()
