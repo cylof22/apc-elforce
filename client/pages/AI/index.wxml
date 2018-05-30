@@ -14,15 +14,34 @@
     <view class="uploader-text">
         <text>样式</text>
     </view>
-    <view class="section">
-        <view class="flex-wrp">
-            <view class="flex-item bc_green" bindtap="selectVangogh">梵高</view>
-            <view class="flex-item bc_red" bindtap="selectMonet">莫奈</view>
-            <view class="flex-item bc_blue" bindtap="selectCezanne">塞尚</view>
-            <view class="flex-item bc_green" bindtap="selectFixedStyle">预设</view>
-            <view class="flex-item bc_yellow" bindtap="selectStyle">定制</view>
+    <view class="tablist">
+        <view class="tab" bindtap="selectVangogh">
+            <view class="content" style="color:{{highLightIndex == idx ? '#54BFE2' : ''}};">
+                <view style="margin-top:2px;">梵高</view>
+            </view>
+        </view>
+        <view class="tab" bindtap="selectMonet">
+            <view class="content" style="color:{{highLightIndex == idx ? '#54BFE2' : ''}};">
+                <view style="margin-top:2px;">莫奈</view>
+            </view>
+        </view>
+        <view class="tab" bindtap="selectCezanne">
+            <view class="content" style="color:{{highLightIndex == idx ? '#54BFE2' : ''}};">
+                <view style="margin-top:2px;">塞尚</view>
+            </view>
+        </view>
+        <view class="tab" bindtap="selectFixedStyle">
+            <view class="content" style="color:{{highLightIndex == idx ? '#54BFE2' : ''}};">
+                <view style="margin-top:2px;">预设</view>
+            </view>
+        </view>
+        <view class="tab" bindtap="selectStyle">
+            <view class="content" style="color:{{highLightIndex == idx ? '#54BFE2' : ''}};">
+                <view style="margin-top:2px;">定制</view>
+            </view>
         </view>
     </view>
+
     <view class="uploader-container" wx:if="{{styleArtist}}">
         <image
             class="uploader-image"
