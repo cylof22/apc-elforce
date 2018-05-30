@@ -138,19 +138,19 @@ Page({
     doStyleTransfer: function() {
         var that = this
         if(this.data.fixedStyle) {
-            doFixedStyleTransfer()
+            this.doFixedStyleTransfer()
         } else if(this.data.styleArtist && this.data.styleArtist != '') {
-          this.doArtistStyleTransfer()
+            this.doArtistStyleTransfer()
         } else {
-          this.doNeuralStyleTransfer()  
+            this.doNeuralStyleTransfer()  
         }
     },
-
+    
     doFixedStyleTransfer: function() {
         var that = this
         var contentInfo = util.base64_encode(that.data.contentImgURL)
         wx.request({
-            url: config.service.fixedURL + '?style=' + fixedStyleType + '&' + 'content=' + contentInfo,
+            url: config.service.fixedURL + '?style=' + that.data.fixedStyleType + '&' + 'content=' + contentInfo,
             method: 'GET',
             success: function (res) {
                 console.log(res)
