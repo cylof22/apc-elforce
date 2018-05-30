@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 import scipy.misc
 
-from stylize import stylize
+from neural_transfer import stylize
 
 def imread(path):
     print(path)

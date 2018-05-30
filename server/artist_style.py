@@ -6,9 +6,8 @@ import tensorflow as tf
 import numpy as np
 from collections import namedtuple
 
-from module import *
-from utils import *
-
+from artist_transfer.module import *
+from artist_style.utils import *
 
 class cyclegan(object):
     def __init__(self, sess, args):
