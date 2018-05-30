@@ -24,9 +24,9 @@ page {
 
 .uploader-container {
     width: 100%;
-    padding: 20rpx 20rpx 20rpx 0;
+    padding: 20rpx 20rpx 20rpx 20rpx;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-content: center;
     justify-content: center;
     box-sizing: border-box;
