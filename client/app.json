@@ -29,12 +29,6 @@
         "iconPath": "images/icons/mark.png",
         "selectedIconPath": "images/icons/markHL.png",
         "text": "智能视觉"
-      },
-      {
-        "pagePath": "pages/user/user",
-        "iconPath": "images/icons/mine.png",
-        "selectedIconPath": "images/icons/mineHL.png",
-        "text": "我的"
       }
     ]
   },
