@@ -4,28 +4,28 @@ Page({
         productList: [{
           id: 1,
           image: 'http://localhost:5000/preview/outputs/BtoA_cezanne2photo_256_DSC_0119.jpg',
-          name: '商品1',
+          name: '丰收的玉米',
         }, {
           id: 2,
           image: 'http://localhost:5000/preview/outputs/7HL_8671.jpg',
-          name: '商品2',
+          name: '飞瀑',
         }, {
           id: 3,
           image: 'http://localhost:5000/preview/outputs/7Inch_4.jpg',
-          name: '商品3',
+          name: '蝴蝶',
         }, {
           id: 4,
           image: 'http://localhost:5000/preview/outputs/BtoA_cezanne2photo_256_DSC_0126.jpg',
-          name: '商品4',
+          name: '故乡的石桥',
         }, {
           id: 5,
           image: 'http://localhost:5000/preview/outputs/BtoA_cezanne2photo_256_DSC_7442.jpg',
-          name: '商品5',
+          name: '春节',
         },
         {
           id: 6,
           image: 'http://localhost:5000/preview/outputs/DSC_8128.jpg',
-          name: '商品6',
+          name: '雪乡',
         }], // 商品列表
     
         // 是否显示loading
