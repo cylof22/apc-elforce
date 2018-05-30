@@ -103,27 +103,27 @@ Page({
     },
 
     selectLamuse: function() {
-        this.data.fixedStyleType = "la_muse.ckpt"
+        this.data.fixedStyleType = "la_muse"
     },
 
     selectRainPrincess: function() {
-        this.data.fixedStyleType = "rain_princess.ckpt"
+        this.data.fixedStyleType = "rain_princess"
     },
 
     selectScreem: function() {
-        this.data.fixedStyleType = "scream.ckpt"
+        this.data.fixedStyleType = "scream"
     },
 
     selectShipwreck: function() {
-        this.data.fixedStyleType = "wreck.ckpt"
+        this.data.fixedStyleType = "wreck"
     },
 
     selectUdnie: function() {
-        this.data.fixedStyleType = "udnie.ckpt"
+        this.data.fixedStyleType = "udnie"
     },
 
     selectWave: function() {
-        this.data.fixedStyleType = "wave.ckpt"
+        this.data.fixedStyleType = "wave"
     },
 
     selectFixedStyle: function() {
