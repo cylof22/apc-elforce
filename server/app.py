@@ -40,7 +40,7 @@ def clipImage(imgFile, name):
 
     im.save(name, 'JPEG')
 
-@app.route('/content', methods=['POST'])
+@app.route('/content', methods=['POST', 'OPTIONS'])
 def uploadContent():
     contentFile = request.files.get('file')
     print(contentFile)
@@ -49,9 +49,10 @@ def uploadContent():
         clipImage(contentFile, contentname)
         return 'http://localhost:5000/preview/contents/' + contentFile.filename
 
+    print("Bad Content File")
     return 'Upload Content fails'
 
-@app.route('/style', methods=['POST'])
+@app.route('/style', methods=['POST', 'OPTIONS'])
 def uploadStyle():
     styleFile = request.files.get('file')
     if styleFile:
@@ -59,6 +60,7 @@ def uploadStyle():
         clipImage(styleFile, stylename)
 
         return 'http://localhost:5000/preview/styles/' + styleFile.filename
+    print("Bad Style file")
     return 'Upload Style Fails'
 
 @app.route('/preview/styles/<path:filename>')
@@ -80,26 +82,28 @@ def facialTransfer():
 @app.route('/styleTransfer', methods=['GET', 'OPTIONS']) 
 def style_transfer(): 
     contentArg = request.args.get('content')
+    contentPath = b64decode(contentArg)
+    contentPath = contentPath.decode('utf-8')
+    content_file = urllib.request.urlretrieve(contentPath)[0]
+
+    clipImage(content_file, content_file)
+
     styleArg = request.args.get('style')
+    stylePath = b64decode(styleArg)
+    stylePath = contentPath.decode('utf-8')
+    style_file = urllib.request.urlretrieve(stylePath)[0]
+
+    clipImage(style_file, style_file)
 
     iterations = request.args.get('iterations', type=int)
     if(iterations is None):
         iterations = 100
 
-    contentPath = b64decode(contentArg)
-    stylePath = b64decode(styleArg)
-
-    contentPath = contentPath.decode('utf-8')
-    stylePath = stylePath.decode('utf-8')
-
-    styleFileName = './styles/' + basename(stylePath)
-    contentFileName = './contents/' + basename(contentPath)
-
     # Construct the output file name
     outputname = basename(stylePath) + '_' + basename(contentPath) + '.png'
     outputPath = './outputs/' + outputname
 
-    args = {"content": contentFileName, "styles": {styleFileName}, "output": outputPath, "iterations": iterations,
+    args = {"content": content_file, "styles": {style_file}, "output": outputPath, "iterations": iterations,
         'network': MODEL_DIR}
     
     styleOp = neuralstyle(args)
@@ -109,7 +113,12 @@ def style_transfer():
     if error is not None:
         return error
 
-    return "http://localhost:5000/preview/outputs/" + outputname
+    # Clear the temporary content file
+    urllib.request.urlcleanup()
+
+    imgMIME = 'image/' + '-'.join(basename(outputPath).split('.')[1:])
+
+    return send_file(outputPath,  mimetype=imgMIME)
 
 @app.route('/fixedStyle', methods=['GET','OPTIONS'])
 def fixed_style():
@@ -121,16 +130,24 @@ def fixed_style():
     contentArg = request.args.get('content')
     contentPath = b64decode(contentArg)
     contentPath = contentPath.decode('utf-8')
+    content_file = urllib.request.urlretrieve(contentPath)[0]
+
+    clipImage(content_file, content_file)
 
     outputfilename = style + '_' + basename(contentPath)
     outputPath = './outputs/' + outputfilename
 
     contentPath = './contents/' + basename(contentPath)
 
-    args = { "in-path": contentPath, "out-path": outputPath, "checkpoint_dir": modelPath}    
+    args = { "in-path": content_file, "out-path": outputPath, "checkpoint_dir": modelPath}    
     _ = faststyle(args)
 
-    return 'http://localhost:5000/preview/outputs/' + outputfilename
+    # Clear the temporary content file
+    urllib.request.urlcleanup()
+
+    imgMIME = 'image/' + '-'.join(basename(outputPath).split('.')[1:])
+
+    return send_file(outputPath,  mimetype=imgMIME)
 
 
 @app.route('/artistStyle', methods=['GET','OPTIONS'])
@@ -140,10 +157,13 @@ def art_style():
     style = request.args.get('artist')
     model_dir = CHECKPOINT_DIR + style
     
+    # Parse the content arguments
     contentArg = request.args.get('content')
     contentPath = b64decode(contentArg)
     contentPath = contentPath.decode('utf-8')
-    content_file = './contents/' + basename(contentPath)
+    content_file = urllib.request.urlretrieve(contentPath)[0]
+
+    clipImage(content_file, content_file)
 
     im = Image.open(content_file)
     width, height = im.size
@@ -179,19 +199,23 @@ def art_style():
     rsImg = img.resize((width,height))
     rsImg.save(outputPath)
 
-    return "http://localhost:5000/preview/outputs" + output_file
+    # Clear the temporary content file
+    urllib.request.urlcleanup()
+
+    imgMIME = 'image/' + '-'.join(basename(outputPath).split('.')[1:])
+
+    return send_file(outputPath,  mimetype=imgMIME)
 
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Authorization')
     return response
 
 def build_parser():
     parser = ArgumentParser()
     parser.add_argument('--host',
             dest='host', help='style server host',
-            metavar='HOST', default='0.0.0.0', required=False)
+            metavar='HOST', default='localhost', required=False)
     parser.add_argument('--port',
             dest='port', help='style server port',
             metavar='PORT', default='5000', required=False)
