@@ -24,14 +24,30 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
+def clipImage(imgFile, name):
+    # keep the height and width ratio
+    im = Image.open(imgFile)
+    width, height = im.size
+    if width > 1024 or height > 1024 : 
+        if width > height:
+            height = 1024 * height / width
+            width = 1024
+        else:
+            width = 1024 * width / height
+            height = 1024
+        
+        im = im.resize([int(width),int(height)], Image.ANTIALIAS)
+
+    im.save(name, 'JPEG')
+
 @app.route('/content', methods=['POST'])
 def uploadContent():
     contentFile = request.files.get('file')
+    print(contentFile)
     if contentFile:
-        contentname = contentFile.filename
-        contentFile.save(join('./contents', contentname))
-        
-        return 'http://localhost:5000/preview/contents/' + contentname
+        contentname = './contents/' + contentFile.filename
+        clipImage(contentFile, contentname)
+        return 'http://localhost:5000/preview/contents/' + contentFile.filename
 
     return 'Upload Content fails'
 
@@ -39,9 +55,10 @@ def uploadContent():
 def uploadStyle():
     styleFile = request.files.get('file')
     if styleFile:
-        stylename = styleFile.filename
-        styleFile.save(join('./styles', stylename))
-        return 'http://localhost:5000/preview/styles/' + stylename
+        stylename = './styles' + styleFile.filename
+        clipImage(styleFile, stylename)
+
+        return 'http://localhost:5000/preview/styles/' + styleFile.filename
     return 'Upload Style Fails'
 
 @app.route('/preview/styles/<path:filename>')
@@ -60,7 +77,7 @@ def outputDisplay(filename):
 def facialTransfer():
     return NotImplemented
 
-@app.route('/styleTransfer', methods=['GET']) 
+@app.route('/styleTransfer', methods=['GET', 'OPTIONS']) 
 def style_transfer(): 
     contentArg = request.args.get('content')
     styleArg = request.args.get('style')
@@ -94,7 +111,7 @@ def style_transfer():
 
     return "http://localhost:5000/preview/outputs/" + outputname
 
-@app.route('/fixedStyle', methods=['GET'])
+@app.route('/fixedStyle', methods=['GET','OPTIONS'])
 def fixed_style():
     # parse the model type
     style = request.args.get("style")
@@ -116,7 +133,7 @@ def fixed_style():
     return 'http://localhost:5000/preview/outputs/' + outputfilename
 
 
-@app.route('/artistStyle', methods=['GET'])
+@app.route('/artistStyle', methods=['GET','OPTIONS'])
 def art_style():
     # Get the artist name
     model_dir = None
@@ -167,7 +184,7 @@ def art_style():
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Authorization')
     return response
 
 def build_parser():
