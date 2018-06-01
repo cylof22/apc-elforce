@@ -218,7 +218,7 @@ def build_parser():
             metavar='HOST', default='localhost', required=False)
     parser.add_argument('--port',
             dest='port', help='style server port',
-            metavar='PORT', default='5000', required=False)
+            metavar='PORT', default='9091', required=False)
     parser.add_argument('--modeldir', 
             dest='modeldir', help='style transfer directory',
             metavar='MODEL', default='./', required=False)
