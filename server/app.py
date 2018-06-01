@@ -208,7 +208,7 @@ def art_style():
 
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', 'http://tulian.17dodo.com')
     return response
 
 def build_parser():
