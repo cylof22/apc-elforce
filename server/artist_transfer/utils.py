@@ -8,7 +8,10 @@ import scipy.misc
 import numpy as np
 import copy
 
-from PIL import Image
+try:
+    _imread = scipy.misc.imread
+except AttributeError:
+    from imageio import imread as _imread
 
 pp = pprint.PrettyPrinter()
 
@@ -41,37 +44,11 @@ class ImagePool(object):
             return image
 
 def load_test_data(image_path, fine_width=256, fine_height=256):
-    img = Image.open(image_path)
-    img.resize((fine_width, fine_height))
+    img = imread(image_path)
+    img.resize((fine_width, fine_height, 3))
     img = img/127.5 - 1
     return img
 
-def load_train_data(image_path, load_size=286, fine_size=256, is_testing=False):
-    img_A = Image.open(image_path[0])
-    img_B = Image.open(image_path[1])
-    if not is_testing:
-        img_A = img_A.resize((load_size, load_size))
-        img_B = img_B.resize((load_size, load_size))
-        h1 = int(np.ceil(np.random.uniform(1e-2, load_size-fine_size)))
-        w1 = int(np.ceil(np.random.uniform(1e-2, load_size-fine_size)))
-        img_A = img_A[h1:h1+fine_size, w1:w1+fine_size]
-        img_B = img_B[h1:h1+fine_size, w1:w1+fine_size]
-
-        if np.random.random() > 0.5:
-            img_A = np.fliplr(img_A)
-            img_B = np.fliplr(img_B)
-    else:
-        img_A = img_A.resize((fine_size, fine_size))
-        img_B = img_B.resize((fine_size, fine_size))
-
-    img_A = img_A/127.5 - 1.
-    img_B = img_B/127.5 - 1.
-
-    img_AB = np.concatenate((img_A, img_B), axis=2)
-    # img_AB shape: (fine_size, fine_size, input_c_dim + output_c_dim)
-    return img_AB
-
-# -----------------------------
 
 def get_image(image_path, image_size, is_crop=True, resize_w=64, is_grayscale = False):
     return transform(imread(image_path, is_grayscale), image_size, is_crop, resize_w)
@@ -99,9 +76,7 @@ def merge(images, size):
     return img
 
 def imsave(images, size, path):
-    #Todo: restore the quality to 100% for jpeg
-    kwargs_write = {'quality':100}
-    Image.imwrite(path, merge(images, size), kwargs=kwargs_write)
+    scipy.misc.imsave(path, merge(images, size))
 
 def center_crop(x, crop_h, crop_w,
                 resize_h=64, resize_w=64):
