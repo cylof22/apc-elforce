@@ -56,12 +56,11 @@ page {
 
 .style-row {
   display: flex;
-  justify-content: space-around; 
-  margin: 5rpx 52rpx 28rpx;
+  justify-content: space-around;
 }
 
 .style-image {
-  width: 450rpx;
+  width: 330rpx;
   border-radius: 13rpx 13rpx 0 0;
   padding: 5px 5px 5px 5px;
 }
