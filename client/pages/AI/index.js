@@ -238,63 +238,67 @@ Page({
                 });
 
                 const canvasCtx = wx.createCanvasContext('shareCanvas');
+                canvasCtx.width = data.width;
+                canvasCtx.height = data.height;
+                
                 //绘制背景
                 canvasCtx.setFillStyle('white');
+                console.log(data.height)
+                console.log(data.width)
                 canvasCtx.fillRect(0, 0, data.width, data.height);
 
                 // draw the preview
-                canvasCtx.drawImage(data.path, 0, 0, data.width, data.height);
+                canvasCtx.drawImage(data.path, 0, 0, data.width, data.height, 0, 0, data.width, data.height);
 
                 // draw the qr image
-                canvasCtx.drawImage('../images/nav/shared.pnt', data.width * 9 / 10, data.height * 9 / 10, data.width, data.height)
+                //canvasCtx.drawImage('../../images/nav/shared.pnt', data.width * 9 / 10, data.height * 9 / 10, data.width, data.height)
 
                 // fill the canvas
-                canvasCtx.draw();
+                canvasCtx.draw(false, wx.canvasToTempFilePath({
+                    x: 0,
+                    y: 0,
+                    width: data.width,
+                    height: data.height,
+                    destWidth: data.width,
+                    destHeight: data.height,
+                    canvasId: 'shareCanvas',
+                    quality: 1,
+                    fileType: "png",
+                    success: function (res) {
+                      //图片保存到本地
+                      wx.saveImageToPhotosAlbum({
+                          filePath: res.tempFilePath,
+                          success:function (data) {
+                              console.log(data);
+                              wx.hideLoading()
+                          },
+                          fail:function (err) {
+                              console.log(err);
+                              if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+                                  console.log("用户一开始拒绝了，我们想再次发起授权")
+                                  console.log('打开设置窗口')
+                                  wx.openSetting({
+                                      success(settingdata) {
+                                          console.log(settingdata)
+                                          if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                                              console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
+                                          } else {
+                                              console.log('获取权限失败，给出不给权限就无法正常使用的提示')
+                                          }
+                                      }
+                                  })  
+                              }
+                          }
+                      })
 
-                setTimeout(function () {
-                    wx.canvasToTempFilePath({
-                      x: 0,
-                      y: 0,
-                      width: data.width,
-                      height: data.height,
-                      destWidth: data.width,
-                      destHeight: data.height,
-                      canvasId: 'shareCanvas',
-                      success: function (res) {
-                        //图片保存到本地
-                        wx.saveImageToPhotosAlbum({
-                            filePath: res.tempFilePath,
-                            success:function (data) {
-                                onsole.log(data);
-                                wx.hideLoading()
-                            },
-                            fail:function (err) {
-                                console.log(err);
-                                if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
-                                    console.log("用户一开始拒绝了，我们想再次发起授权")
-                                    console.log('打开设置窗口')
-                                    wx.openSetting({
-                                        success(settingdata) {
-                                            console.log(settingdata)
-                                            if (settingdata.authSetting['scope.writePhotosAlbum']) {
-                                                console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
-                                            } else {
-                                                console.log('获取权限失败，给出不给权限就无法正常使用的提示')
-                                            }
-                                        }
-                                    })  
-                                }
-                            }
-                        })
-
-                        wx.hideLoading();
-                      },
-                      fail: function (res) {
-                        console.log(res)
-                        wx.hideLoading();
-                      }
-                    })
-                  }, 2000);
+                      wx.hideLoading();
+                    },
+                    fail: function (res) {
+                      console.log(res)
+                      wx.hideLoading();
+                    }
+                  })
+                )
             },
             fail: function(data) {
                 // Todo: Please retry again
@@ -314,7 +318,7 @@ Page({
         // 选择图片
         wx.chooseImage({
             count: 1,
-            sizeType: ['compressed'],
+            sizeType: ['original'],
             sourceType: ['album', 'camera'],
             success: function(res){
                 //util.showBusy('正在加载')
