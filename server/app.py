@@ -3,7 +3,6 @@ from base64 import b64decode
 from os.path import basename, join
 import urllib
 from collections import namedtuple
-from PIL import Image
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg',])
 
@@ -15,6 +14,10 @@ from artist_style import cyclegan
 from fast_style import faststyle
 from argparse import ArgumentParser
 
+from imageio import imread, imwrite
+
+from skimage.transform import resize
+
 app = Flask(__name__)
 
 MODEL_DIR = ''
@@ -24,30 +27,13 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-def clipImage(imgFile, name):
-    # keep the height and width ratio
-    im = Image.open(imgFile)
-    width, height = im.size
-    if width > 1024 or height > 1024 : 
-        if width > height:
-            height = 1024 * height / width
-            width = 1024
-        else:
-            width = 1024 * width / height
-            height = 1024
-        
-        im = im.resize([int(width),int(height)], Image.ANTIALIAS)
-
-    im.save(name, 'JPEG')
-
 @app.route('/content', methods=['POST', 'OPTIONS'])
 def uploadContent():
     contentFile = request.files.get('file')
-    print(contentFile)
     if contentFile:
         contentname = './contents/' + contentFile.filename
-        clipImage(contentFile, contentname)
-        return 'http://localhost:5000/preview/contents/' + contentFile.filename
+        contentFile.save(contentname)
+        return 'https://39.106.123.1:9091/preview/contents/' + contentFile.filename
 
     print("Bad Content File")
     return 'Upload Content fails'
@@ -57,9 +43,8 @@ def uploadStyle():
     styleFile = request.files.get('file')
     if styleFile:
         stylename = './styles' + styleFile.filename
-        clipImage(styleFile, stylename)
-
-        return 'http://localhost:5000/preview/styles/' + styleFile.filename
+        styleFile.save(stylename)
+        return 'https://39.106.123.1:9091/preview/styles/' + styleFile.filename
     print("Bad Style file")
     return 'Upload Style Fails'
 
@@ -86,21 +71,17 @@ def style_transfer():
     contentPath = contentPath.decode('utf-8')
     content_file = urllib.request.urlretrieve(contentPath)[0]
 
-    clipImage(content_file, content_file)
-
     styleArg = request.args.get('style')
     stylePath = b64decode(styleArg)
     stylePath = contentPath.decode('utf-8')
     style_file = urllib.request.urlretrieve(stylePath)[0]
-
-    clipImage(style_file, style_file)
 
     iterations = request.args.get('iterations', type=int)
     if(iterations is None):
         iterations = 100
 
     # Construct the output file name
-    outputname = basename(stylePath) + '_' + basename(contentPath) + '.png'
+    outputname = basename(stylePath) + '_' + basename(contentPath) + '.jpg'
     outputPath = './outputs/' + outputname
 
     args = {"content": content_file, "styles": {style_file}, "output": outputPath, "iterations": iterations,
@@ -132,8 +113,6 @@ def fixed_style():
     contentPath = contentPath.decode('utf-8')
     content_file = urllib.request.urlretrieve(contentPath)[0]
 
-    clipImage(content_file, content_file)
-
     outputfilename = style + '_' + basename(contentPath)
     outputPath = './outputs/' + outputfilename
 
@@ -163,10 +142,8 @@ def art_style():
     contentPath = contentPath.decode('utf-8')
     content_file = urllib.request.urlretrieve(contentPath)[0]
 
-    clipImage(content_file, content_file)
-
-    im = Image.open(content_file)
-    width, height = im.size
+    im = imread(content_file)
+    width, height, _ = im.shape
 
     fine_width = width
     if (width % 4) != 0:
@@ -185,8 +162,9 @@ def art_style():
     args = OPTIONS._make((fine_width, fine_height, 3, 3, True, True, content_file, model_dir, './outputs/',
             64, 64,'test', 'BtoA', output_file))
 
-    tfconfig = tf.ConfigProto(allow_soft_placement=True)
-    tfconfig.gpu_options.allow_growth = True
+    gpuOptions = tf.GPUOptions(allow_growth=True)
+    tfconfig = tf.ConfigProto(gpu_options=gpuOptions)
+    tfconfig.allow_soft_placement = True
 
     outputPath = None
     tf.reset_default_graph()
@@ -195,9 +173,9 @@ def art_style():
         outputPath = model.test(args)
     
     # resize the file to the original image size
-    img = Image.open(outputPath)
-    rsImg = img.resize((width,height))
-    rsImg.save(outputPath)
+    img = imread(outputPath)
+    rsImg = resize(img, [width,height])
+    imwrite(rsImg, outputPath)
 
     # Clear the temporary content file
     urllib.request.urlcleanup()
@@ -208,14 +186,14 @@ def art_style():
 
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', 'https://tulian.17dodo.com')
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 def build_parser():
     parser = ArgumentParser()
     parser.add_argument('--host',
             dest='host', help='style server host',
-            metavar='HOST', default='localhost', required=False)
+            metavar='HOST', default='0.0.0.0', required=False)
     parser.add_argument('--port',
             dest='port', help='style server port',
             metavar='PORT', default='9091', required=False)
