@@ -1,9 +1,6 @@
 {
   "pages":[
-    "pages/main/main",
-    "pages/AI/index",
-    "pages/user/user"
-
+    "pages/AI/index"
   ],
   "window":{
     "backgroundColor":"#F6F6F6",
@@ -12,29 +9,8 @@
     "navigationBarTitleText": "诺多精灵之力",
     "navigationBarTextStyle":"black"
   },
-  "tabBar": {
-    "color": "#858585",
-    "selectedColor": "#39b5de",
-    "backgroundColor": "#ffffff",
-    "borderStyle": "black",
-    "list":[
-      {
-        "pagePath": "pages/main/main",
-        "iconPath": "images/icons/mark.png",
-        "selectedIconPath": "images/icons/markHL.png",
-        "text": "发现"
-      },
-      {
-        "pagePath": "pages/AI/index",
-        "iconPath": "images/icons/mark.png",
-        "selectedIconPath": "images/icons/markHL.png",
-        "text": "智能视觉"
-      }
-    ]
-  },
   "networkTimeout": {
     "request": 100000000,
     "downloadFile": 100000000
-  },
-  "debug": true
+  }
 }
