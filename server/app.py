@@ -178,12 +178,12 @@ def art_style():
 
     output_file = style + basename(contentPath)
     OPTIONS = namedtuple('OPTIONS', 'fine_width fine_height input_nc output_nc\
-                              L1_lambda lr use_resnet use_lsgan dataset_dir sample_file checkpoint_dir output_dir \
-                              ngf ndf max_size phase direction \
-                              beta1 epoch epoch_step batch_size train_size output_file')
+                            use_resnet use_lsgan sample_file checkpoint_dir output_dir \
+                            ngf ndf phase direction \
+                            output_file')
     
-    args = OPTIONS._make((fine_width, fine_height, 3, 3, 10.0, 0.0002, True, True, '', content_file, model_dir, './data/outputs/',64, 64, 50, 'test', 'BtoA',
-                         0.5, 200, 100, 1, 1e8, output_file))
+    args = OPTIONS._make((fine_width, fine_height, 3, 3, True, True, content_file, model_dir, './outputs/',
+            64, 64,'test', 'BtoA', output_file))
 
     tfconfig = tf.ConfigProto(allow_soft_placement=True)
     tfconfig.gpu_options.allow_growth = True
@@ -208,7 +208,7 @@ def art_style():
 
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', 'http://tulian.17dodo.com')
+    response.headers.add('Access-Control-Allow-Origin', 'https://tulian.17dodo.com')
     return response
 
 def build_parser():
