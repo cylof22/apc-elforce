@@ -73,7 +73,7 @@ def style_transfer():
 
     styleArg = request.args.get('style')
     stylePath = b64decode(styleArg)
-    stylePath = contentPath.decode('utf-8')
+    stylePath = stylePath.decode('utf-8')
     style_file = urllib.request.urlretrieve(stylePath)[0]
 
     iterations = request.args.get('iterations', type=int)
