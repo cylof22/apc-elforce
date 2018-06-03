@@ -175,7 +175,7 @@ def art_style():
     # resize the file to the original image size
     img = imread(outputPath)
     rsImg = resize(img, [width,height])
-    imwrite(rsImg, outputPath)
+    imwrite(outputPath, rsImg)
 
     # Clear the temporary content file
     urllib.request.urlcleanup()
