@@ -212,5 +212,5 @@ if __name__ == '__main__':
     MODEL_DIR = options.modeldir
     CHECKPOINT_DIR = options.checkpointdir
 
-    ssl = ('./certification/server.crt', './certification/server.key')
-    app.run(host=options.host,port=int(options.port))
+    ssl = ('./certification/server.pem', './certification/server.key')
+    app.run(host=options.host,port=int(options.port), ssl_context=ssl)
