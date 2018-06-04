@@ -33,7 +33,7 @@ def uploadContent():
     if contentFile:
         contentname = './contents/' + contentFile.filename
         contentFile.save(contentname)
-        return 'https://39.106.123.1:9091/preview/contents/' + contentFile.filename
+        return 'https://tulian.17dodo.com:9091/preview/contents/' + contentFile.filename
 
     print("Bad Content File")
     return 'Upload Content fails'
@@ -44,7 +44,7 @@ def uploadStyle():
     if styleFile:
         stylename = './styles' + styleFile.filename
         styleFile.save(stylename)
-        return 'https://39.106.123.1:9091/preview/styles/' + styleFile.filename
+        return 'https://tulian.17dodo.com:9091/preview/styles/' + styleFile.filename
     print("Bad Style file")
     return 'Upload Style Fails'
 
