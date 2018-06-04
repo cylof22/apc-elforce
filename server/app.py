@@ -111,7 +111,7 @@ def fixed_style():
     contentPath = contentPath.decode('utf-8')
     content_file = urllib.request.urlretrieve(contentPath)[0]
 
-    outputfilename = style + '_' + basename(contentPath) + '.jpg'
+    outputfilename = style + '_' + basename(contentPath)
     outputPath = './outputs/' + outputfilename
 
     contentPath = './contents/' + basename(contentPath)
@@ -149,7 +149,7 @@ def art_style():
     if (height % 4) != 0:
         fine_height = height - height % 4
 
-    output_file = style + basename(contentPath) + '.jpg'
+    output_file = style + basename(contentPath)
     OPTIONS = namedtuple('OPTIONS', 'fine_width fine_height input_nc output_nc\
                             use_resnet use_lsgan sample_file checkpoint_dir output_dir \
                             ngf ndf phase direction \
@@ -176,7 +176,7 @@ def art_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return 'https://tulian.17dodo.com:9091/preview/outputs/' + output_file
+    return 'https://tulian.17dodo.com:9091/preview/outputs/' + basename(outputPath)
 
 @app.after_request
 def after_request(response):
