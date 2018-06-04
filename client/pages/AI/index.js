@@ -165,6 +165,9 @@ Page({
             method: 'GET',
             success: function (res) {
                 console.log(res)
+                wx.previewImage({
+                  urls: [res.data],
+                })
                 that.setData({
                     previewImgURL: res.data
                 })
@@ -189,6 +192,9 @@ Page({
             method: 'GET',
             success: function (res) {
                 console.log(res)
+                wx.previewImage({
+                  urls: [res.data],
+                })
                 that.setData({
                     previewImgURL: res.data
                 })
@@ -213,8 +219,9 @@ Page({
             url: config.service.artistURL + '?artist=' + that.data.styleArtist + '&' + 'content=' + contentInfo,
             method: 'GET',
             success: function (res) {
-                console.log('STATUS: ' + res.statusCode)
-                console.log('HEADERS: ' + JSON.stringify(res.headers))
+                wx.previewImage({
+                  urls: [res.data],
+                })
                 that.setData({
                     previewImgURL: res.data
                 })
