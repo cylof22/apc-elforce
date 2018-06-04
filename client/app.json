@@ -3,11 +3,11 @@
     "pages/AI/index"
   ],
   "window":{
-    "backgroundColor":"#F6F6F6",
+    "backgroundColor":"#eceff4",
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarBackgroundColor": "#39b5de",
     "navigationBarTitleText": "诺多精灵之力",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"light"
   },
   "networkTimeout": {
     "request": 100000000,
