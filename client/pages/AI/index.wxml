@@ -57,7 +57,7 @@
                 bindtap="selectRainPrincess"
             ></image>
             <view class="desc">
-                <text class="name" styles="align-items: center;">阿夫列莫夫 · 雨中的公主</text>
+                <text class="name" styles="align-items: center;">阿夫列莫夫 · 雨中公主</text>
             </view>
         </view>
         <view class="item-container">
