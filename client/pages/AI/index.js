@@ -26,6 +26,10 @@ Page({
         highLightIndex: -1,
     },
 
+    onLoad : function(event) {
+      // initialize with cezane style
+      this.selectCezanne()
+    },
     selectContent: function(event) {
         var that = this
         this._chooseImgAndUpload(
