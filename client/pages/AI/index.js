@@ -6,172 +6,189 @@ var app = getApp()
 
 Page({
     data: {
-        // Content Image
-        contentImgURL: '',
-
-        // Style Image
-        styleImgURL: '',
-
-        // fixed style 
-        fixedStyle: false,
-        fixedStyleType: '',
-
-        // Artist type
-        styleArtist: '',
-        masterPiece: '',
-
         // Preview Image
         previewImgURL: '',
-
-        highLightIndex: -1,
-    },
-
-    onLoad : function(event) {
-      // initialize with cezane style
-      this.selectCezanne()
-    },
-    selectContent: function(event) {
-        var that = this
-        this._chooseImgAndUpload(
-            config.service.contentURL,
-            function(filePath) {
-                console.log(filePath)
-                that.setData({
-                    contentImgURL: filePath
-                })
-            },
-            function (res) {
-                console.log(res)
-                that.setData({
-                  contentImgURL: res.data
-                })
-            },
-
-            function (e) {
-                console.log(e)
-            }
-        )
-    },
-
-    selectStyle: function() {
-        var that = this
-        this._chooseImgAndUpload(
-            config.service.styleURL,
-            function(filePath) {
-                that.setData({
-                    artistTransfer: false,
-                    styleArtist: '',
-                    masterPiece: '',
-                    styleImgURL: filePath,
-                    fixedStyle: false,
-                    highLightIndex: 4,
-                })
-            },
-            function (res) {
-                console.log(res)
-                that.setData({
-                  styleImgURL: res.data
-                })
-            },
-
-            function (e) {
-                console.log(e)
-            }
-        )
     },
 
     selectVangogh: function() {
-        this.setData({
-            styleArtist: 'vangogh2photo_256',
-            masterPiece: 'still-life-vase-with-fifteen-sunflowers-1888-1.jpg',
-            styleImgURL: '',
-            fixedStyle: false,
-            highLightIndex: 0,
-        })
-        
+      let that = this
+      this._chooseImgAndUpload(
+        config.service.contentURL,
+        function (filePath) {
+          console.log(filePath)
+          
+        },
+        function (res) {
+          console.log(res)
+          that.doArtistStyleTransfer('vangogh2photo_256', res.data)
+        },
+
+        function (e) {
+          console.log(e)
+        }
+      ) 
     },
 
     selectCezanne: function() {
-        this.setData({
-            styleArtist: 'cezanne2photo_256',
-            masterPiece: 'forest.jpg',
-            styleImgURL: '',
-            fixedStyle: false,
-            highLightIndex: 2,
-        })
+        let that = this
+        this._chooseImgAndUpload(
+            config.service.contentURL,
+            function (filePath) {
+                console.log(filePath)
+            },
+            function (res) {
+                console.log(res)
+                that.doArtistStyleTransfer('cezanne2photo_256', res.data)
+            },
+
+            function (e) {
+                console.log(e)
+            }
+        )
     },
 
     selectMonet: function() {
-        this.setData({
-            styleArtist: 'monet2photo_256',
-            masterPiece: 'autumn-on-the-seine-at-argenteuil.jpg',
-            styleImgURL: '',
-            fixedStyle: false,
-            highLightIndex: 1,
-        })
-        
+        let that = this
+        this._chooseImgAndUpload(
+            config.service.contentURL,
+            function (filePath) {
+                console.log(filePath)
+            },
+            function (res) {
+                console.log(res)
+                that.doArtistStyleTransfer('monet2photo_256', res.data)
+            },
+
+            function (e) {
+                console.log(e)
+            }
+        )        
     },
 
     selectLamuse: function() {
-        this.data.fixedStyleType = "la_muse"
+        let that = this
+        this._chooseImgAndUpload(
+            config.service.contentURL,
+            function (filePath) {
+                console.log(filePath)
+            },
+            function (res) {
+                console.log(res)
+                that.doFixedStyleTransfer('la_muse', res.data)
+                that.setData({
+                    contentImgURL: res.data
+                })
+            },
+
+            function (e) {
+                console.log(e)
+            }
+        )
     },
 
     selectRainPrincess: function() {
-        this.data.fixedStyleType = "rain_princess"
+        let that = this
+        this._chooseImgAndUpload(
+            config.service.contentURL,
+            function (filePath) {
+                console.log(filePath)
+            },
+            function (res) {
+                console.log(res)
+                that.doFixedStyleTransfer('rain_princess', res.data)
+            },
+
+            function (e) {
+                console.log(e)
+            }
+        )
     },
 
     selectScreem: function() {
-        this.data.fixedStyleType = "scream"
+        let that = this
+        this._chooseImgAndUpload(
+            config.service.contentURL,
+            function (filePath) {
+                console.log(filePath)
+            },
+            function (res) {
+                console.log(res)
+                that.doFixedStyleTransfer('scream', res.data)
+            },
+
+            function (e) {
+                console.log(e)
+            }
+        )
     },
 
     selectShipwreck: function() {
-        this.data.fixedStyleType = "wreck"
+        let that = this
+        this._chooseImgAndUpload(
+            config.service.contentURL,
+            function (filePath) {
+                console.log(filePath)
+            },
+            function (res) {
+                console.log(res)
+                that.doFixedStyleTransfer('wreck', res.data)
+            },
+
+            function (e) {
+                console.log(e)
+            }
+        )
     },
 
     selectUdnie: function() {
-        this.data.fixedStyleType = "udnie"
+        let that = this
+        this._chooseImgAndUpload(
+            config.service.contentURL,
+            function (filePath) {
+                console.log(filePath)
+            },
+            function (res) {
+                console.log(res)
+                that.doFixedStyleTransfer('udnie', res.data)
+            },
+
+            function (e) {
+                console.log(e)
+            }
+        )
     },
 
     selectWave: function() {
-        this.data.fixedStyleType = "wave"
-    },
+        let that = this
+        this._chooseImgAndUpload(
+            config.service.contentURL,
+            function (filePath) {
+                console.log(filePath)
+                
+            },
+            function (res) {
+                console.log(res)
+                that.doFixedStyleTransfer('wave', res.data)
+            },
 
-    selectFixedStyle: function() {
-        this.setData({
-            fixedStyle: true,
-            styleArtist: '',
-            masterPiece: '',
-            styleImgURL: '',
-            highLightIndex: 3,
-        })
-    },
-
-    doStyleTransfer: function() {
-        var that = this
-        if(this.data.fixedStyle) {
-            this.doFixedStyleTransfer()
-        } else if(this.data.styleArtist && this.data.styleArtist != '') {
-            this.doArtistStyleTransfer()
-        } else {
-            this.doNeuralStyleTransfer()  
-        }
+            function (e) {
+                console.log(e)
+            }
+        )
     },
     
-    doFixedStyleTransfer: function() {
+    doFixedStyleTransfer: function(style, contentURL) {
         var that = this
-        var contentInfo = util.base64_encode(that.data.contentImgURL)
+        var contentInfo = util.base64_encode(contentURL)
         wx.showLoading({
             title: '正在生成图片...',
             mask: true,
         });
         wx.request({
-            url: config.service.fixedURL + '?style=' + that.data.fixedStyleType + '&' + 'content=' + contentInfo,
+            url: config.service.fixedURL + '?style=' + style + '&' + 'content=' + contentInfo,
             method: 'GET',
             success: function (res) {
                 console.log(res)
-                wx.previewImage({
-                  urls: [res.data],
-                })
                 that.setData({
                     previewImgURL: res.data
                 })
@@ -196,9 +213,6 @@ Page({
             method: 'GET',
             success: function (res) {
                 console.log(res)
-                wx.previewImage({
-                  urls: [res.data],
-                })
                 that.setData({
                     previewImgURL: res.data
                 })
@@ -211,21 +225,18 @@ Page({
         })
     },
 
-    doArtistStyleTransfer: function() {
+    doArtistStyleTransfer: function(artist, contentURL) {
         var that = this
-        var contentInfo = util.base64_encode(that.data.contentImgURL)
+        var contentInfo = util.base64_encode(contentURL)
         wx.showLoading({
             title: '正在生成图片...',
             mask: true,
         });
 
         wx.request({
-            url: config.service.artistURL + '?artist=' + that.data.styleArtist + '&' + 'content=' + contentInfo,
+            url: config.service.artistURL + '?artist=' + artist + '&' + 'content=' + contentInfo,
             method: 'GET',
             success: function (res) {
-                wx.previewImage({
-                  urls: [res.data],
-                })
                 that.setData({
                     previewImgURL: res.data
                 })
@@ -281,6 +292,12 @@ Page({
                 wx.hideLoading()
             }
         })
+    },
+
+    OnPreviewResult: function() {
+      wx.previewImage({
+        urls: [this.data.previewImgURL],
+      })
     },
     /**
      * 统一封装选择图片和上传图片的 API

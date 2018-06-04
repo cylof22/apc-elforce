@@ -6,10 +6,6 @@ page {
     justify-content: flex-start;
 }
 
-.uploader-image {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
 
 .uploader-text {
     padding-left: 30px;
@@ -24,10 +20,6 @@ page {
     border-bottom: 5px;
 }
 
-.content {
-  font-size: 35rpx;
-}
-
 .uploader-container {
     width: 100%;
     padding: 5rpx 5rpx 5rpx 5rpx;
@@ -39,22 +31,6 @@ page {
     border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
-.tablist {
-    height: 50%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.tablist .tab {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 25px;
-    width: 25%;
-    padding-left: 10px;
-    padding-right: 10px;
-}
 
 .btn-share {
   border-radius: 50rpx!important;

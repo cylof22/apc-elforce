@@ -1,89 +1,62 @@
 <!--index.wxml-->
 <view class="container">
-    <!-- 内容 -->
-    <view class="uploader-text" bindtap="selectContent">
-        <text>原图</text>
-    </view>
-    <view class="uploader-container" wx:if="{{contentImgURL}}">
+    <view class="style-row">
         <image
-            class="uploader-image"
-            src="{{contentImgURL}}"
-            mode="aspectFit"
+            class="style-image"
+            src="../../images/fixed-styles/still-life-vase-with-fifteen-sunflowers-1888-1.jpg"
+            mode="widthFix"
+            bindtap="selectVangogh"
+        ></image>
+        <image
+            class="style-image"
+            src="../../images/fixed-styles/autumn-on-the-seine-at-argenteuil.jpg"
+            mode="widthFix"
+            bindtap="selectMonet"
         ></image>
     </view>
-    <view class="uploader-text">
-        <text>风格</text>
-    </view>
-    <view class="tablist">
-        <view class="tab" bindtap="selectVangogh">
-            <view class="content" style="color:{{highLightIndex == 0 ? '#54BFE2' : ''}};">
-                <view style="margin-top:2px;">梵高</view>
-            </view>
-        </view>
-        <view class="tab" bindtap="selectMonet">
-            <view class="content" style="color:{{highLightIndex == 1 ? '#54BFE2' : ''}};">
-                <view style="margin-top:2px;">莫奈</view>
-            </view>
-        </view>
-        <view class="tab" bindtap="selectCezanne">
-            <view class="content" style="color:{{highLightIndex == 2 ? '#54BFE2' : ''}};">
-                <view style="margin-top:2px;">塞尚</view>
-            </view>
-        </view>
-        <view class="tab" bindtap="selectFixedStyle">
-            <view class="content" style="color:{{highLightIndex == 3 ? '#54BFE2' : ''}};">
-                <view style="margin-top:2px;">预设</view>
-            </view>
-        </view>
-        <view class="tab" bindtap="selectStyle">
-            <view class="content" style="color:{{highLightIndex == 4 ? '#54BFE2' : ''}};">
-                <view style="margin-top:2px;">定制</view>
-            </view>
-        </view>
-    </view>
-
-    <view class="uploader-container" wx:if="{{styleArtist}}">
+    <view class="style-row">
         <image
-            class="uploader-image"
-            src="../../images/fixed-styles/{{masterPiece}}"
-            mode="aspectFit"
+            class="style-image"
+            src="../../images/fixed-styles/forest.jpg"
+            mode="widthFix"
+            bindtap="selectCezanne"
         ></image>
-    </view>
-    <view class="style-row" wx:if="{{fixedStyle}}">
         <image
             class="style-image"
             src="../../images/fixed-styles/la_muse.jpg"
             mode="widthFix"
             bindtap="selectLamuse"
         ></image>
+    </view>
+    <view class="style-row">
         <image
             class="style-image"
             src="../../images/fixed-styles/rain_princess.jpg"
             mode="widthFix"
             bindtap="selectRainPrincess"
         ></image>
-    </view>
-    <view class="style-row" wx:if="{{fixedStyle}}">
         <image
             class="style-image"
             src="../../images/fixed-styles/the_scream.jpg"
             mode="widthFix"
             bindtap="selectScreem"
         ></image>
+    </view>
+    <view class="style-row">
         <image
             class="style-image"
             src="../../images/fixed-styles/the_shipwreck_of_the_minotaur.jpg"
             mode="widthFix"
             bindtap="selectShipwreck"
         ></image>
-    </view>
-    <view class="style-row" wx:if="{{fixedStyle}}">
         <image
             class="style-image"
             src="../../images/fixed-styles/udnie.jpg"
             mode="widthFix"
             bindtap="selectUdnie"
         ></image>
+    </view>
+    <view class="style-row">
         <image
             class="style-image"
             src="../../images/fixed-styles/wave.jpg"
@@ -99,6 +72,7 @@
         ></image>
     </view>
 
+
     <view class="uploader-text" bindtap="doStyleTransfer">
         <text>创作</text>
     </view>
@@ -108,6 +82,7 @@
             class="uploader-image"
             src="{{previewImgURL}}"
             mode="aspectFit"
+            bindtap='OnPreviewResult'
         ></image>
         <canvas hidden="true" styles="width: 1024px;height: 1024px;" canvas-id="shareCanvas"/>
         <button class="btn-share" type="primary" bindtap="saveAndShare">保存图片，分享到朋友圈</button>
