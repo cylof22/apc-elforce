@@ -1,5 +1,5 @@
 {
-	"description": "Configuration",
+	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": []
 	},
@@ -11,8 +11,8 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.8",
-	"appid": "wx192bd79390ac6d55",
+	"libVersion": "2.0.9",
+	"appid": "wx5bfdf4dcf439b08a",
 	"projectname": "apc-elforce",
 	"condition": {
 		"search": {
