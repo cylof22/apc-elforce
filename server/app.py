@@ -116,7 +116,7 @@ def fixed_style():
     outputfilename = style + '_' + basename(contentPath)
     outputPath = './outputs/' + outputfilename
 
-    contentPath = './contents/' + basename(contentPath)
+    contentPath = './contents/' + basename(contentPath) + '.jpg'
 
     args = { "in-path": content_file, "out-path": outputPath, "checkpoint_dir": modelPath}    
     _ = faststyle(args)
@@ -153,7 +153,7 @@ def art_style():
     if (height % 4) != 0:
         fine_height = height - height % 4
 
-    output_file = style + basename(contentPath)
+    output_file = style + basename(contentPath) + '.jpg'
     OPTIONS = namedtuple('OPTIONS', 'fine_width fine_height input_nc output_nc\
                             use_resnet use_lsgan sample_file checkpoint_dir output_dir \
                             ngf ndf phase direction \
