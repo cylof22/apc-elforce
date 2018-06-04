@@ -17,14 +17,20 @@ page {
 
 .uploader-text, .tunnel-text {
     width: 100%;
-    line-height: 52px;
-    font-size: 34rpx;
+    line-height: 30px;
+    font-size: 35rpx;
     color: #007AFF;
+    border-top: 5px;
+    border-bottom: 5px;
+}
+
+.content {
+  font-size: 35rpx;
 }
 
 .uploader-container {
     width: 100%;
-    padding: 20rpx 20rpx 20rpx 20rpx;
+    padding: 5rpx 5rpx 5rpx 5rpx;
     display: flex;
     flex-direction: row;
     align-content: center;
@@ -44,7 +50,7 @@ page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px;
+    height: 25px;
     width: 25%;
     padding-left: 10px;
     padding-right: 10px;
