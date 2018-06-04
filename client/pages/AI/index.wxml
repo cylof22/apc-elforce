@@ -1,68 +1,113 @@
 <!--index.wxml-->
 <view class="container">
     <view class="style-row">
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/still-life-vase-with-fifteen-sunflowers-1888-1.jpg"
-            mode="widthFix"
-            bindtap="selectVangogh"
-        ></image>
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/autumn-on-the-seine-at-argenteuil.jpg"
-            mode="widthFix"
-            bindtap="selectMonet"
-        ></image>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/still-life-vase-with-fifteen-sunflowers-1888-1.jpg"
+                mode="widthFix"
+                bindtap="selectVangogh"
+            ></image>
+            <view class="desc">
+                <text class="name">大师 · 梵高</text>
+            </view>
+        </view>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/autumn-on-the-seine-at-argenteuil.jpg"
+                mode="widthFix"
+                bindtap="selectMonet"
+            ></image>
+            <view class="desc">
+                <text class="name">大师 · 莫奈</text>
+            </view>
+        </view>
     </view>
     <view class="style-row">
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/forest.jpg"
-            mode="widthFix"
-            bindtap="selectCezanne"
-        ></image>
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/la_muse.jpg"
-            mode="widthFix"
-            bindtap="selectLamuse"
-        ></image>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/forest.jpg"
+                mode="widthFix"
+                bindtap="selectCezanne"
+            ></image>
+            <view class="desc">
+                <text class="name" styles="align-items: center;">大师 · 塞尚</text>
+            </view>
+        </view>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/la_muse.jpg"
+                mode="widthFix"
+                bindtap="selectLamuse"
+            ></image>
+            <view class="desc">
+                <text class="name" styles="align-items: center;">毕加索 · 沉睡的缪斯</text>
+            </view>
+        </view>
     </view>
     <view class="style-row">
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/rain_princess.jpg"
-            mode="widthFix"
-            bindtap="selectRainPrincess"
-        ></image>
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/the_scream.jpg"
-            mode="widthFix"
-            bindtap="selectScreem"
-        ></image>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/rain_princess.jpg"
+                mode="widthFix"
+                bindtap="selectRainPrincess"
+            ></image>
+            <view class="desc">
+                <text class="name" styles="align-items: center;">阿夫列莫夫 · 雨中的公主</text>
+            </view>
+        </view>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/the_scream.jpg"
+                mode="widthFix"
+                bindtap="selectScreem"
+            ></image>
+            <view class="desc">
+                <text class="name" styles="align-items: center;">蒙克 · 呐喊</text>
+            </view>
+        </view>
     </view>
     <view class="style-row">
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/the_shipwreck_of_the_minotaur.jpg"
-            mode="widthFix"
-            bindtap="selectShipwreck"
-        ></image>
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/udnie.jpg"
-            mode="widthFix"
-            bindtap="selectUdnie"
-        ></image>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/the_shipwreck_of_the_minotaur.jpg"
+                mode="widthFix"
+                bindtap="selectShipwreck"
+            ></image>
+            <view class="desc">
+                <text class="name" styles="align-items: center;">透纳 · 运输船遇难</text>
+            </view>
+        </view>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/udnie.jpg"
+                mode="widthFix"
+                bindtap="selectUdnie"
+            ></image>
+            <view class="desc">
+                <text class="name" styles="align-items: center;">皮卡比亚 · Udnie</text>
+            </view>
+        </view>
     </view>
     <view class="style-row">
-        <image
-            class="style-image"
-            src="../../images/fixed-styles/wave.jpg"
-            mode="widthFix"
-            bindtap="selectWave"
-        ></image>
+        <view class="item-container">
+            <image
+                class="style-image"
+                src="../../images/fixed-styles/wave.jpg"
+                mode="widthFix"
+                bindtap="selectWave"
+            ></image>
+            <view class="desc">
+                <text class="name" styles="align-items: center;">葛饰北斋 · 波浪</text>
+            </view>
+        </view>
     </view>
     <view class="uploader-container" wx:if="{{styleImgURL}}">
         <image

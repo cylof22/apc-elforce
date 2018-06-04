@@ -11,6 +11,8 @@ page {
     padding-left: 30px;
 }
 
+
+
 .uploader-text, .tunnel-text {
     width: 100%;
     line-height: 30px;
@@ -31,6 +33,22 @@ page {
     border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
+.item-container {
+  margin: 10rpx 20rpx;
+  position: relative;
+}
+
+.desc {
+  margin: 5rpx 5rpx;
+  text-align:center;
+  border-bottom: 1px solid #E5E7ED;
+}
+
+.desc .name {
+    line-height: 10px;
+    font-size: 35rpx;
+    color: #007AFF;
+}
 
 .btn-share {
   border-radius: 50rpx!important;
