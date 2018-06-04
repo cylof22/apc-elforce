@@ -52,3 +52,7 @@ server/models
 server/certifcation
 server/certification/server.crt
 server/certification/server.key
+server/checkpoint
+server/contents
+server/outputs
+server/styles
