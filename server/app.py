@@ -97,9 +97,7 @@ def style_transfer():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    imgMIME = 'image/' + '-'.join(basename(outputPath).split('.')[1:])
-
-    return send_file(outputPath,  mimetype=imgMIME)
+    return 'https://tulian.17dodo.com:9091/preview/outputs/' + outputname
 
 @app.route('/fixedStyle', methods=['GET','OPTIONS'])
 def fixed_style():
@@ -113,10 +111,10 @@ def fixed_style():
     contentPath = contentPath.decode('utf-8')
     content_file = urllib.request.urlretrieve(contentPath)[0]
 
-    outputfilename = style + '_' + basename(contentPath)
+    outputfilename = style + '_' + basename(contentPath) + '.jpg'
     outputPath = './outputs/' + outputfilename
 
-    contentPath = './contents/' + basename(contentPath) + '.jpg'
+    contentPath = './contents/' + basename(contentPath)
 
     args = { "in-path": content_file, "out-path": outputPath, "checkpoint_dir": modelPath}    
     _ = faststyle(args)
@@ -124,9 +122,7 @@ def fixed_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    imgMIME = 'image/' + '-'.join(basename(outputPath).split('.')[1:])
-
-    return send_file(outputPath,  mimetype=imgMIME)
+    return 'https://tulian.17dodo.com:9091/preview/outputs/' + outputfilename
 
 
 @app.route('/artistStyle', methods=['GET','OPTIONS'])
@@ -180,9 +176,7 @@ def art_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    imgMIME = 'image/' + '-'.join(basename(outputPath).split('.')[1:])
-
-    return send_file(outputPath,  mimetype=imgMIME)
+    return 'https://tulian.17dodo.com:9091/preview/outputs/' + output_file
 
 @app.after_request
 def after_request(response):
