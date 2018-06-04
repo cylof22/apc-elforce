@@ -42,7 +42,7 @@ def uploadContent():
 def uploadStyle():
     styleFile = request.files.get('file')
     if styleFile:
-        stylename = './styles' + styleFile.filename
+        stylename = './styles/' + styleFile.filename
         styleFile.save(stylename)
         return 'https://tulian.17dodo.com:9091/preview/styles/' + styleFile.filename
     print("Bad Style file")
