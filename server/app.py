@@ -34,7 +34,7 @@ def uploadContent():
     if contentFile:
         contentname = './contents/' + contentFile.filename
         contentFile.save(contentname)
-        return 'https://tulian.17dodo.com/preview/contents/' + contentFile.filename
+        return 'https://tulian.17dodo.com:9091/preview/contents/' + contentFile.filename
 
     print("Bad Content File")
     return 'Upload Content fails'
@@ -45,7 +45,7 @@ def uploadStyle():
     if styleFile:
         stylename = './styles/' + styleFile.filename
         styleFile.save(stylename)
-        return 'https://tulian.17dodo.com/preview/styles/' + styleFile.filename
+        return 'https://tulian.17dodo.com:9091/preview/styles/' + styleFile.filename
     print("Bad Style file")
     return 'Upload Style Fails'
 
@@ -98,7 +98,7 @@ def style_transfer():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return 'https://tulian.17dodo.com/preview/outputs/' + outputname
+    return 'https://tulian.17dodo.com:9091/preview/outputs/' + outputname
 
 @app.route('/fixedStyle', methods=['GET','OPTIONS'])
 def fixed_style():
@@ -123,7 +123,7 @@ def fixed_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return 'https://tulian.17dodo.com/preview/outputs/' + outputfilename
+    return 'https://tulian.17dodo.com:9091/preview/outputs/' + outputfilename
 
 
 @app.route('/artistStyle', methods=['GET','OPTIONS'])
@@ -177,7 +177,7 @@ def art_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return 'https://tulian.17dodo.com/preview/outputs/' + basename(outputPath)
+    return 'https://tulian.17dodo.com:9091/preview/outputs/' + basename(outputPath)
 
 @app.after_request
 def after_request(response):
@@ -191,7 +191,7 @@ def build_parser():
             metavar='HOST', default='0.0.0.0', required=False)
     parser.add_argument('--port',
             dest='port', help='style server port',
-            metavar='PORT', default='80', required=False)
+            metavar='PORT', default='9091', required=False)
     parser.add_argument('--modeldir', 
             dest='modeldir', help='style transfer directory',
             metavar='MODEL', default='./', required=False)
