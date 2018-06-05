@@ -17,15 +17,15 @@ Page({
   },
 
   onShareAppMessage: function(res) {
-      if(this.data.style != '') {
+      if( this.data.style != null && this.data.style != '') {
         return {
-            title: '🙋‍♂，我的第一幅' + this.data.style + '作品',
+            title: '🙋‍♂，我的' + this.data.style + '作品',
             path: '/pages/Result/index?result=' + this.data.previewImgURL,
             imageUrl: this.data.previewImgURL
           }
       } else {
         return {
-            title: '🙋‍♂，我的第一幅妙图',
+            title: '🙋‍♂，我的妙图',
             path: '/pages/Result/index?result=' + this.data.previewImgURL,
             imageUrl: this.data.previewImgURL
           }
