@@ -1,0 +1,12 @@
+ <view class="preview-container" wx:if="{{previewImgURL}}">
+    <image
+        class="uploader-image"
+        src="{{previewImgURL}}"
+        mode="aspectFit"
+        bindtap='OnPreviewResult'
+    ></image>
+    <view class="toolbar">
+        <button class="btn-share" type='primary' bindtap="save">下载</button>
+        <button class="btn-share" type='primary' open-type="share">分享</button>
+    </view>
+</view>

@@ -1,6 +1,7 @@
 {
   "pages":[
-    "pages/AI/index"
+    "pages/AI/index",
+    "pages/Result/index"
   ],
   "window":{
     "backgroundColor":"#eceff4",

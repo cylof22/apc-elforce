@@ -105,7 +105,7 @@
                 bindtap="selectWave"
             ></image>
             <view class="desc">
-                <text class="name" styles="align-items: center;">葛饰北斋 · 波浪</text>
+                <text class="name" styles="align-items: center;">葛饰北斋 · 海浪</text>
             </view>
         </view>
     </view>
@@ -115,21 +115,5 @@
             src="{{styleImgURL}}"
             mode="aspectFit"
         ></image>
-    </view>
-
-
-    <view class="uploader-text" bindtap="doStyleTransfer">
-        <text>创作</text>
-    </view>
-    
-    <view class="preview-container" wx:if="{{previewImgURL}}">
-        <image
-            class="uploader-image"
-            src="{{previewImgURL}}"
-            mode="aspectFit"
-            bindtap='OnPreviewResult'
-        ></image>
-        <canvas hidden="true" styles="width: 1024px;height: 1024px;" canvas-id="shareCanvas"/>
-        <button class="btn-share" type="primary" bindtap="saveAndShare">保存图片，分享到朋友圈</button>
     </view>
 </view>

@@ -6,12 +6,9 @@ page {
     justify-content: flex-start;
 }
 
-
 .uploader-text {
     padding-left: 30px;
 }
-
-
 
 .uploader-text, .tunnel-text {
     width: 100%;
@@ -48,10 +45,6 @@ page {
     line-height: 10px;
     font-size: 35rpx;
     color: #007AFF;
-}
-
-.btn-share {
-  border-radius: 50rpx!important;
 }
 
 .style-row {
