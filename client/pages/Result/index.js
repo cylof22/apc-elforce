@@ -17,10 +17,18 @@ Page({
   },
 
   onShareAppMessage: function(res) {
-    return {
-        title: '🙋‍♂，我的第一幅' + this.data.style + '作品',
-        path: '/pages/Result/index?result=' + this.data.previewImgURL,
-        imageUrl: this.data.previewImgURL
+      if(this.data.style != '') {
+        return {
+            title: '🙋‍♂，我的第一幅' + this.data.style + '作品',
+            path: '/pages/Result/index?result=' + this.data.previewImgURL,
+            imageUrl: this.data.previewImgURL
+          }
+      } else {
+        return {
+            title: '🙋‍♂，我的第一幅妙图',
+            path: '/pages/Result/index?result=' + this.data.previewImgURL,
+            imageUrl: this.data.previewImgURL
+          }
       }
   },
 

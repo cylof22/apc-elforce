@@ -208,7 +208,7 @@ Page({
             success: function (res) {
                 wx.hideLoading()
                 wx.navigateTo({
-                    url: '../Result/index?result=' + res.data + '&style=' + that.artistURLstyle
+                    url: '../Result/index?result=' + res.data
                 })
             },
             fail: function (res) {
@@ -232,7 +232,7 @@ Page({
             success: function (res) {
                 wx.hideLoading();
                 wx.navigateTo({
-                    url:'../Result/index?result=' + res.data + '&style=' + that.style
+                    url:'../Result/index?result=' + res.data + '&style=' + that.artist
                 })
             },
             fail: function (res) {
