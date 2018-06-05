@@ -6,30 +6,6 @@ page {
     justify-content: flex-start;
 }
 
-.uploader-text {
-    padding-left: 30px;
-}
-
-.uploader-text, .tunnel-text {
-    width: 100%;
-    line-height: 30px;
-    font-size: 35rpx;
-    color: #007AFF;
-    border-top: 5px;
-    border-bottom: 5px;
-}
-
-.uploader-container {
-    width: 100%;
-    padding: 5rpx 5rpx 5rpx 5rpx;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-    box-sizing: border-box;
-    border-top: 1px solid rgba(0, 0, 0, .1);
-}
-
 .item-container {
   margin: 10rpx 20rpx;
   position: relative;
