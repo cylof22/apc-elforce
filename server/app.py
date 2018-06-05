@@ -3,6 +3,7 @@ from base64 import b64decode
 from os.path import basename, join
 import urllib
 from collections import namedtuple
+import ssl
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg',])
 
@@ -206,5 +207,7 @@ if __name__ == '__main__':
     MODEL_DIR = options.modeldir
     CHECKPOINT_DIR = options.checkpointdir
 
-    ssl = ('./certification/server.pem', './certification/server.key')
-    app.run(host=options.host,port=int(options.port), debug=True, ssl_context=ssl)
+    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    context.load_cert_chain('./certification/server.pem', './certification/server.key')
+
+    app.run(host=options.host,port=int(options.port), debug=True, ssl_context=context)
