@@ -210,5 +210,7 @@ if __name__ == '__main__':
     MODEL_DIR = options.modeldir
     CHECKPOINT_DIR = options.checkpointdir
 
-    context = ('./certification/server.pem', './certification/server.key')
+    context = ssl.SSLContext(ssl.SSLv3_method)
+    context.load_cert_chain('./certification/server.pem', './certification/server.key')
+
     app.run(host=options.host,port=int(options.port), ssl_context=context, threaded=True, debug=True)
