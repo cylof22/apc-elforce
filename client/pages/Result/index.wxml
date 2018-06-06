@@ -6,7 +6,7 @@
         bindtap='OnPreviewResult'
     ></image>
     <view class="toolbar">
-        <button class="btn-share" type='primary' bindtap="save">下载</button>
-        <button class="btn-share" type='primary' open-type="share">分享</button>
+        <button class="btn-download" bindtap="save">下载</button>
+        <button class="btn-share" open-type="share">分享</button>
     </view>
 </view>

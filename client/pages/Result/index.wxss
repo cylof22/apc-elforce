@@ -22,6 +22,16 @@ page {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  margin-top: 8rpx;
+}
+
+.btn-download {
+  font-size: 35rpx;
+  width: 150rpx;
+  height: 70rpx;
+  padding-top: 0rpx;
+  border-radius: 6px!important;
+  background-color: #39b5de
 }
 
 .btn-share {
@@ -30,5 +40,5 @@ page {
   height: 70rpx;
   padding-top: 0rpx;
   border-radius: 6px!important;
-  background: #0000F6;
+  background-color: #39b5de
 }
