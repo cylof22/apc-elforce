@@ -211,4 +211,4 @@ if __name__ == '__main__':
     CHECKPOINT_DIR = options.checkpointdir
 
     context = ('./certification/server.pem', './certification/server.key')
-    app.run(port=int(options.port), ssl_context=context)
+    app.run(host=options.host,port=int(options.port), ssl_context=context)
