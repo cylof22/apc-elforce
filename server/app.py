@@ -25,7 +25,7 @@ MODEL_DIR = ''
 CHECKPOINT_DIR = ''
 
 PROTOCOL = 'https://'
-HOST_DOMAIN = 'www.xe.com.cn:9091'
+HOST_DOMAIN = 'xe.com.cn:9091'
 
 def allowed_file(filename):
     return '.' in filename and \
