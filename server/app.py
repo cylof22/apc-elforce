@@ -24,6 +24,7 @@ app = Flask(__name__)
 MODEL_DIR = ''
 CHECKPOINT_DIR = ''
 
+HOST_DOMAIN = 'www.xe.com.cn:9091'
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -34,7 +35,7 @@ def uploadContent():
     if contentFile:
         contentname = './contents/' + contentFile.filename
         contentFile.save(contentname)
-        return 'https://tulian.17dodo.com:9091/preview/contents/' + contentFile.filename
+        return  HOST_DOMAIN + '/preview/contents/' + contentFile.filename
 
     print("Bad Content File")
     return 'Upload Content fails'
@@ -45,7 +46,7 @@ def uploadStyle():
     if styleFile:
         stylename = './styles/' + styleFile.filename
         styleFile.save(stylename)
-        return 'https://tulian.17dodo.com:9091/preview/styles/' + styleFile.filename
+        return HOST_DOMAIN + '/preview/styles/' + styleFile.filename
     print("Bad Style file")
     return 'Upload Style Fails'
 
@@ -98,7 +99,7 @@ def style_transfer():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return 'https://tulian.17dodo.com:9091/preview/outputs/' + outputname
+    return HOST_DOMAIN + '/preview/outputs/' + outputname
 
 @app.route('/fixedStyle', methods=['GET','OPTIONS'])
 def fixed_style():
@@ -123,7 +124,7 @@ def fixed_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return 'https://tulian.17dodo.com:9091/preview/outputs/' + outputfilename
+    return HOST_DOMAIN + '/preview/outputs/' + outputfilename
 
 
 @app.route('/artistStyle', methods=['GET','OPTIONS'])
@@ -177,7 +178,7 @@ def art_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return 'https://tulian.17dodo.com:9091/preview/outputs/' + basename(outputPath)
+    return HOST_DOMAIN + '/preview/outputs/' + basename(outputPath)
 
 @app.after_request
 def after_request(response):
@@ -208,6 +209,6 @@ if __name__ == '__main__':
     CHECKPOINT_DIR = options.checkpointdir
 
     context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    context.load_cert_chain('./certification/server.pem', './certification/server.key')
+    context.load_cert_chain('./certification/1_www.xe.com.cn_bundle.crt', './certification/2_www.xe.com.cn.key')
 
     app.run(host=options.host,port=int(options.port), debug=True, ssl_context=context)
