@@ -10,8 +10,11 @@ Page({
       this._chooseImgAndUpload(
         config.service.contentURL,
         function (filePath) {
+            wx.showLoading({
+                title: '正在生成图片...',
+                mask: true,
+            });
           console.log(filePath)
-          
         },
         function (res) {
           console.log(res)
@@ -29,6 +32,10 @@ Page({
         this._chooseImgAndUpload(
             config.service.contentURL,
             function (filePath) {
+                wx.showLoading({
+                    title: '正在生成图片...',
+                    mask: true,
+                });
                 console.log(filePath)
             },
             function (res) {
@@ -47,6 +54,10 @@ Page({
         this._chooseImgAndUpload(
             config.service.contentURL,
             function (filePath) {
+                wx.showLoading({
+                    title: '正在生成图片...',
+                    mask: true,
+                });
                 console.log(filePath)
             },
             function (res) {
@@ -65,6 +76,10 @@ Page({
         this._chooseImgAndUpload(
             config.service.contentURL,
             function (filePath) {
+                wx.showLoading({
+                    title: '正在生成图片...',
+                    mask: true,
+                });
                 console.log(filePath)
             },
             function (res) {
@@ -86,6 +101,10 @@ Page({
         this._chooseImgAndUpload(
             config.service.contentURL,
             function (filePath) {
+                wx.showLoading({
+                    title: '正在生成图片...',
+                    mask: true,
+                });
                 console.log(filePath)
             },
             function (res) {
@@ -104,6 +123,10 @@ Page({
         this._chooseImgAndUpload(
             config.service.contentURL,
             function (filePath) {
+                wx.showLoading({
+                    title: '正在生成图片...',
+                    mask: true,
+                });
                 console.log(filePath)
             },
             function (res) {
@@ -122,6 +145,10 @@ Page({
         this._chooseImgAndUpload(
             config.service.contentURL,
             function (filePath) {
+                wx.showLoading({
+                    title: '正在生成图片...',
+                    mask: true,
+                });
                 console.log(filePath)
             },
             function (res) {
@@ -140,6 +167,10 @@ Page({
         this._chooseImgAndUpload(
             config.service.contentURL,
             function (filePath) {
+                wx.showLoading({
+                    title: '正在生成图片...',
+                    mask: true,
+                });
                 console.log(filePath)
             },
             function (res) {
@@ -158,8 +189,11 @@ Page({
         this._chooseImgAndUpload(
             config.service.contentURL,
             function (filePath) {
+                wx.showLoading({
+                    title: '正在生成图片...',
+                    mask: true,
+                });
                 console.log(filePath)
-                
             },
             function (res) {
                 console.log(res)
@@ -175,10 +209,7 @@ Page({
     doFixedStyleTransfer: function(style, contentURL) {
         var that = this
         var contentInfo = util.base64_encode(contentURL)
-        wx.showLoading({
-            title: '正在生成图片...',
-            mask: true,
-        });
+
         wx.request({
             url: config.service.fixedURL + '?style=' + style + '&' + 'content=' + contentInfo,
             method: 'GET',
@@ -198,10 +229,7 @@ Page({
         var that = this
         var styleInfo = util.base64_encode(that.data.styleImgURL)
         var contentInfo = util.base64_encode(that.data.contentImgURL)
-        wx.showLoading({
-            title: '正在生成图片...',
-            mask: true,
-        });
+
         wx.request({
             url: config.service.customURL + '?style=' + styleInfo + '&' + 'content=' + contentInfo,
             method: 'GET',
@@ -221,10 +249,6 @@ Page({
     doArtistStyleTransfer: function(artist, contentURL) {
         var that = this
         var contentInfo = util.base64_encode(contentURL)
-        wx.showLoading({
-            title: '正在生成图片...',
-            mask: true,
-        });
 
         wx.request({
             url: config.service.artistURL + '?artist=' + artist + '&' + 'content=' + contentInfo,
@@ -249,7 +273,7 @@ Page({
      */
     _chooseImgAndUpload (url, beforUpload, successfunc, failfunc) {
         var that = this
-        
+
         // 选择图片
         wx.chooseImage({
             count: 1,
