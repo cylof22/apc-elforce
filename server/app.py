@@ -24,7 +24,7 @@ app = Flask(__name__)
 MODEL_DIR = ''
 CHECKPOINT_DIR = ''
 
-PROTOCOL = 'https://'
+PROTOCOL = 'http://'
 HOST_DOMAIN = 'tulian.17dodo.com'
 
 def allowed_file(filename):
