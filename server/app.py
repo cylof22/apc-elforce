@@ -25,7 +25,7 @@ MODEL_DIR = ''
 CHECKPOINT_DIR = ''
 
 PROTOCOL = 'https://'
-HOST_DOMAIN = 'tulian.17dodo.com:9091'
+HOST_DOMAIN = 'tulian.17dodo.com'
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -194,7 +194,7 @@ def build_parser():
             metavar='HOST', default='0.0.0.0', required=False)
     parser.add_argument('--port',
             dest='port', help='style server port',
-            metavar='PORT', default='9091', required=False)
+            metavar='PORT', default='8000', required=False)
     parser.add_argument('--modeldir', 
             dest='modeldir', help='style transfer directory',
             metavar='MODEL', default='./', required=False)
