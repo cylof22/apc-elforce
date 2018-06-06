@@ -24,7 +24,7 @@ app = Flask(__name__)
 MODEL_DIR = ''
 CHECKPOINT_DIR = ''
 
-HOST_DOMAIN = 'www.xe.com.cn:9091'
+HOST_DOMAIN = 'xe.com.cn:9091'
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
