@@ -2,7 +2,7 @@
  * 小程序配置文件
  */
 
-var host = 'https://tulian.17dodo.com:9091';
+var host = 'https://tulian.17dodo.com';
 
 var config = {
 
