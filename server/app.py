@@ -25,7 +25,7 @@ MODEL_DIR = ''
 CHECKPOINT_DIR = ''
 
 PROTOCOL = 'https://'
-HOST_DOMAIN = 'xe.com.cn:9091'
+HOST_DOMAIN = 'tulian.17dodo:9091'
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -211,6 +211,6 @@ if __name__ == '__main__':
     CHECKPOINT_DIR = options.checkpointdir
 
     context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    context.load_cert_chain('./certification/1_www.xe.com.cn_bundle.crt', './certification/2_www.xe.com.cn.key')
+    context.load_cert_chain('./certification/server.pem', './certification/server.key')
 
     app.run(host=options.host,port=int(options.port), debug=True, ssl_context=context)
