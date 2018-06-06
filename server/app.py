@@ -24,7 +24,9 @@ app = Flask(__name__)
 MODEL_DIR = ''
 CHECKPOINT_DIR = ''
 
-HOST_DOMAIN = 'xe.com.cn:9091'
+PROTOCOL = 'https://'
+HOST_DOMAIN = 'www.xe.com.cn:9091'
+
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -35,7 +37,7 @@ def uploadContent():
     if contentFile:
         contentname = './contents/' + contentFile.filename
         contentFile.save(contentname)
-        return  HOST_DOMAIN + '/preview/contents/' + contentFile.filename
+        return PROTOCOL + HOST_DOMAIN + '/preview/contents/' + contentFile.filename
 
     print("Bad Content File")
     return 'Upload Content fails'
@@ -46,7 +48,7 @@ def uploadStyle():
     if styleFile:
         stylename = './styles/' + styleFile.filename
         styleFile.save(stylename)
-        return HOST_DOMAIN + '/preview/styles/' + styleFile.filename
+        return PROTOCOL + HOST_DOMAIN + '/preview/styles/' + styleFile.filename
     print("Bad Style file")
     return 'Upload Style Fails'
 
@@ -99,7 +101,7 @@ def style_transfer():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return HOST_DOMAIN + '/preview/outputs/' + outputname
+    return PROTOCOL + HOST_DOMAIN + '/preview/outputs/' + outputname
 
 @app.route('/fixedStyle', methods=['GET','OPTIONS'])
 def fixed_style():
@@ -124,7 +126,7 @@ def fixed_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return HOST_DOMAIN + '/preview/outputs/' + outputfilename
+    return PROTOCOL + HOST_DOMAIN + '/preview/outputs/' + outputfilename
 
 
 @app.route('/artistStyle', methods=['GET','OPTIONS'])
@@ -178,7 +180,7 @@ def art_style():
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return HOST_DOMAIN + '/preview/outputs/' + basename(outputPath)
+    return PROTOCOL + HOST_DOMAIN + '/preview/outputs/' + basename(outputPath)
 
 @app.after_request
 def after_request(response):
