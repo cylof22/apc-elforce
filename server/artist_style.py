@@ -10,8 +10,7 @@ from artist_transfer.module import *
 from artist_transfer.utils import *
 
 class cyclegan(object):
-    def __init__(self, sess, args):
-        self.sess = sess
+    def __init__(self, args):
         self.image_width = args.fine_width
         self.image_height = args.fine_height
         self.input_c_dim = args.input_nc
@@ -33,9 +32,17 @@ class cyclegan(object):
                                       args.ngf, args.ndf, args.output_nc,
                                       args.phase == 'train'))
 
-        self._build_model()
-        self.saver = tf.train.Saver()
+        gpuOptions = tf.GPUOptions(allow_growth=True)
+        tfconfig = tf.ConfigProto(gpu_options=gpuOptions)
+        tfconfig.allow_soft_placement = True
 
+        tf.reset_default_graph()
+        with tf.Session(config=tfconfig) as sess:
+            self.sess = sess
+            self._build_model()
+            self.saver = tf.train.Saver()
+            self.test(args)
+            
     def _build_model(self):
         self.real_data = tf.placeholder(tf.float32,
                                         [None, self.image_width, self.image_height,

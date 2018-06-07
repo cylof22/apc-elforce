@@ -92,10 +92,9 @@ def style_transfer():
         'network': MODEL_DIR}
     
     styleOp = neuralstyle(args)
-    _, error = styleOp.train()
 
     # Todo: How to add the custom error information to the response
-    if error is not None:
+    if styleOp.error is not None:
         return error
 
     # Clear the temporary content file
@@ -121,7 +120,7 @@ def fixed_style():
     contentPath = './contents/' + basename(contentPath)
 
     args = { "in-path": content_file, "out-path": outputPath, "checkpoint_dir": modelPath}    
-    _ = faststyle(args)
+    faststyle(args)
 
     # Clear the temporary content file
     urllib.request.urlcleanup()
@@ -153,34 +152,28 @@ def art_style():
     if (height % 4) != 0:
         fine_height = height - height % 4
 
-    output_file = style + basename(contentPath)
+    outputName = style + basename(contentPath)
+    outputPath = './outputs/'
     OPTIONS = namedtuple('OPTIONS', 'fine_width fine_height input_nc output_nc\
                             use_resnet use_lsgan sample_file checkpoint_dir output_dir \
                             ngf ndf phase direction \
                             output_file')
     
     args = OPTIONS._make((fine_width, fine_height, 3, 3, True, True, content_file, model_dir, './outputs/',
-            64, 64,'test', 'BtoA', output_file))
+            64, 64,'test', 'BtoA', outputName))
 
-    gpuOptions = tf.GPUOptions(allow_growth=True)
-    tfconfig = tf.ConfigProto(gpu_options=gpuOptions)
-    tfconfig.allow_soft_placement = True
-
-    outputPath = None
-    tf.reset_default_graph()
-    with tf.Session(config=tfconfig) as sess:
-        model = cyclegan(sess, args)
-        outputPath = model.test(args)
+    cyclegan(args)
     
     # resize the file to the original image size
-    img = imread(outputPath)
+    outputFile = outputPath + outputName
+    img = imread(outputFile)
     rsImg = resize(img, [width,height])
-    imwrite(outputPath, rsImg)
+    imwrite(outputFile, rsImg)
 
     # Clear the temporary content file
     urllib.request.urlcleanup()
 
-    return PROTOCOL + HOST_DOMAIN + '/preview/outputs/' + basename(outputPath)
+    return PROTOCOL + HOST_DOMAIN + '/preview/outputs/' + outputName
 
 @app.after_request
 def after_request(response):

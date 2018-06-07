@@ -87,6 +87,7 @@ class neuralstyle(object):
         if self.style_layer_weight_exp is None:
             self.style_layer_weight_exp = 1
         
+        _, self.error = self.train()
 
     def train(self):
         # Download the content image to the local machine
