@@ -29,8 +29,10 @@ def ffwd(data_in, paths_out, checkpoint_dir, device_t='/gpu:0', batch_size=4):
 
     g = tf.Graph()
     batch_size = min(len(paths_out), batch_size)
-    soft_config = tf.ConfigProto(allow_soft_placement=True)
-    soft_config.gpu_options.allow_growth = True
+    gpuOptions = tf.GPUOptions(allow_growth=True)
+    soft_config = tf.ConfigProto(gpu_options=gpuOptions)
+    soft_config.allow_soft_placement = True
+
     with g.as_default(), g.device(device_t), \
             tf.Session(config=soft_config) as sess:
         batch_shape = (batch_size,) + img_shape
@@ -156,7 +158,7 @@ class faststyle(object):
             files = list_files(in_path)
             full_in = [os.path.join(in_path,x) for x in files]
             full_out = [os.path.join(out_path,x) for x in files]
-            if opts.allow_different_dimensions:
+            if args.allow_different_dimensions:
                 ffwd_different_dimensions(full_in, full_out, checkpoint_dir,
                         device_t=device, batch_size=batch_size)
             else :
@@ -182,7 +184,7 @@ def exists(p, msg):
 
 def list_files(in_path):
     files = []
-    for (dirpath, dirnames, filenames) in os.walk(in_path):
+    for (_, _, filenames) in os.walk(in_path):
         files.extend(filenames)
         break
 
