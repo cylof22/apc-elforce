@@ -95,7 +95,7 @@ def style_transfer():
 
     # Todo: How to add the custom error information to the response
     if styleOp.error is not None:
-        return error
+        return styleOp.error
 
     # Clear the temporary content file
     urllib.request.urlcleanup()
